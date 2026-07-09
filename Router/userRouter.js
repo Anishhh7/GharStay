@@ -9,10 +9,10 @@ router.post("/login", authController.logIn);
 
 router.use(authController.protect);
 
+router.post('/createuser',userController.createUser)
 router
   .route("/")
   .get(userController.getAllUsers)
-  .post(userController.createUser);
 
 router.route("/:id").get(userController.updateUser);
 
