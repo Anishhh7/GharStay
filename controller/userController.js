@@ -24,10 +24,10 @@ exports.createUser = catchAsync(async (req, res, next) => {
   const { name, email, password, role } = req.body;
 
   if (!["employee", "admin"].includes(req.body.role)) {
-    return next(new AppError("you are not authoeized", 401));
+    return next(new AppError("you are not authorized", 401));
   }
 
-  const user = new User({
+  const user = await User.create({
     name,
     email,
     password,
@@ -38,6 +38,19 @@ exports.createUser = catchAsync(async (req, res, next) => {
     status: "Success",
     data: user,
     message: "User created sucessfully"
+  });
+});
+
+exports.createManyUsers = catchAsync(async (req, res, next) => {
+  const usersData = req.body.users;
+  const createdUsers = await Promise.all(
+    usersData.map((userData) => User.create(userData))
+  );
+
+  res.status(201).json({
+    status: "success",
+    results: createdUsers.length,
+    data: createdUsers
   });
 });
 

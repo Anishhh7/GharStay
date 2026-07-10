@@ -16,9 +16,9 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: {
-      values: ["superAdmin", "admin", "employee"]
+      values: ["superAdmin", "admin", "staff"]
     },
-    default: "employee"
+    default: "staff"
   },
   password: {
     type: String,
@@ -28,13 +28,17 @@ const userSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true
-  }
+  },
+  passwordChangedAt: Date,
 });
 
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
 
   this.password = await bcrypt.hash(this.password, 12);
+    if (!this.isNew) {
+    this.passwordChangedAt = Date.now() - 1000;
+  }
 });
 
 userSchema.methods.checkCorrectPassword = async function (
@@ -43,6 +47,14 @@ userSchema.methods.checkCorrectPassword = async function (
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
+
+userSchema.methods.checkPasswordChanged = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+    return JWTTimestamp < changedTimestamp;
+  }
+  return false;
+}
 
 const User = mongoose.model("User", userSchema);
 

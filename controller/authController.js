@@ -51,6 +51,27 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(
       new AppError("You are not logged in.Please login and try again", 401)
     );
-    }
-next();
+  }
+  
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser) {
+    return next(new AppError('This token is no longer available', 401));
+  }
+
+  if (currentUser.checkPasswordChanged(decoded.iat)) {
+    return next(new AppError('User password has been recently changed. Please login again', 401))
+  }
+  req.user = currentUser;
+  next();
 });
+
+exports.restrictTo = (...roles) => {
+  return(req, res, next)=> {
+    if (!roles.includes(req.user.role)) {
+      return next(new AppError('Permission Denied', 403))
+    }
+    next();
+  }
+}
