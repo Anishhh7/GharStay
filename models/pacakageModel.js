@@ -1,5 +1,5 @@
-const validator = require("validator");
-const mongoose = require("mongoose");
+import validator from 'validator';
+import mongoose from 'mongoose';
 
 const packageSchema = new mongoose.Schema({
   name: {
@@ -38,4 +38,4 @@ const packageSchema = new mongoose.Schema({
 });
 
 const Package = mongoose.model("Package", packageSchema);
-module.exports = Package;
+export default Package;

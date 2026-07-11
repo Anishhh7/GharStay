@@ -1,7 +1,7 @@
-const express = require("express");
-const RoomController = require("./../controller/roomController");
-const authController = require("./../controller/authController");
-const permission = require("./../Config/permission");
+import express from 'express';
+import * as RoomController from './../controller/roomController.js';
+import * as authController from './../controller/authController.js'
+import permission from './../Config/permission.js';
 
 const router = express.Router();
 
@@ -29,4 +29,4 @@ router
     RoomController.deleteRoom
   );
 
-module.exports = router;
+export default router;

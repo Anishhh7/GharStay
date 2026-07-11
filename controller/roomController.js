@@ -1,9 +1,9 @@
-const APIFeatures = require("./../utils/apiFeatures");
-const catchAsync = require("./../utils/catchAsync");
-const AppError = require("./../utils/appError");
-const Room = require("../models/roomModel");
+import catchAsync from './../utils/catchAsync.js';
+import AppError from './../utils/appError.js';
+import APIFeatures from '../utils/apiFeatures.js';
+import Room from '../models/roomModel.js';
 
-exports.getAllRooms = catchAsync(async (req, res, next) => {
+export const getAllRooms = catchAsync(async (req, res, next) => {
     const features = new APIFeatures(Room.find(), req.query)
         .filter()
         .search()
@@ -30,7 +30,7 @@ exports.getAllRooms = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getRoom = catchAsync(async (req, res, next) => {
+export const getRoom = catchAsync(async (req, res, next) => {
   const room = await Room.findById(req.params.id);
 
   if (!room) {
@@ -45,7 +45,7 @@ exports.getRoom = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createRoom = catchAsync(async (req, res, next) => {
+export const createRoom = catchAsync(async (req, res, next) => {
   const room = await Room.create(req.body);
 
   res.status(201).json({
@@ -56,7 +56,7 @@ exports.createRoom = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateRoom = catchAsync(async (req, res, next) => {
+export const updateRoom = catchAsync(async (req, res, next) => {
   const room = await Room.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
@@ -75,7 +75,7 @@ exports.updateRoom = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteRoom = catchAsync(async (req, res, next) => {
+export const deleteRoom = catchAsync(async (req, res, next) => {
   const room = await Room.findByIdAndDelete(req.params.id);
 
   if (!room) {

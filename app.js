@@ -1,10 +1,12 @@
-const express = require("express");
-const morgan = require("morgan");
-const globalErrorHandler = require("./controller/errorController");
-const userRouter = require("./Router/userRouter");
-const roomRouter = require("./Router/roomRouter");
-const packageRouter = require('./Router/packageRouter');
-const menuRouter= require('./Router/menuRouter')
+import express from 'express'
+import morgan from 'morgan';
+import globalErrorHandler from './controller/errorController.js'
+import userRouter from './Router/userRouter.js'
+import roomRouter from './Router/roomRouter.js'
+import packageRouter from './Router/packageRouter.js'
+import menuRouter from './Router/menuRouter.js'
+
+
 
 const app = express();
 app.set("query parser", "extended");
@@ -26,4 +28,4 @@ app.all('/{*path}', (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-module.exports = app;
+export default app;

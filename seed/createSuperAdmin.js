@@ -1,6 +1,8 @@
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config({ path: "./Config/config.env" });
+import mongoose from "mongoose";
+import dotenv from 'dotenv';
+dotenv.config({ path: './Config/config.env' })
+import User from './../models/userModel.js'
+
 const User = require("./../models/userModel");
 const DB = process.env.DATABASE.replace(
   "<PASSWORD>",

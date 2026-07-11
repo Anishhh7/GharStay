@@ -1,7 +1,7 @@
-const express = require("express");
-const menuController = require("./../controller/menuController");
-const authController = require("./../controller/authController");
-const permission = require("./../Config/permission");
+import express from 'express';
+import * as menuController from './../controller/menuController.js';
+import * as authController from './../controller/authController.js';
+import permission from './../Config/permission.js';
 
 const router = express.Router();
 
@@ -35,4 +35,4 @@ router
     menuController.deleteMenu
   );
 
-module.exports = router;
+export default router;

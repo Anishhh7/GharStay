@@ -1,7 +1,7 @@
-const express = require("express");
-const PackageController = require("./../controller/packageController");
-const authController = require("./../controller/authController");
-const permission = require("./../Config/permission");
+import express from 'express';
+import * as PackageController from './../controller/packageController.js';
+import * as authController from './../controller/authController.js'
+import permission from './../Config/permission.js';
 
 const router = express.Router();
 
@@ -31,4 +31,4 @@ router
     PackageController.deletePackage
   );
 
-module.exports = router;
+export default router;

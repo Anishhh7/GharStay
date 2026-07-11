@@ -1,6 +1,6 @@
-const validator = require("validator");
-const bcrypt = require("bcryptjs");
-const mongoose = require("mongoose");
+import validator from 'validator';
+import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -58,4 +58,4 @@ userSchema.methods.checkPasswordChanged = function (JWTTimestamp) {
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+export default User;

@@ -1,9 +1,9 @@
-const crypto = require("crypto");
-const jwt = require("jsonwebtoken");
-const User = require('./../models/userModel');
-const catchAsync = require("./../utils/catchAsync");
-const AppError = require("./../utils/appError");
-const morgan = require("morgan");
+import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
+import catchAsync from './../utils/catchAsync.js';
+import AppError  from './../utils/appError.js';
+import morgan from 'morgan';
+import User from './../models/userModel.js'
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -22,7 +22,7 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
-exports.logIn = catchAsync(async (req, res, next) => {
+export const logIn = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -38,7 +38,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
-exports.protect = catchAsync(async (req, res, next) => {
+export const protect = catchAsync(async (req, res, next) => {
   let token;
   if (
     req.headers &&
@@ -67,7 +67,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.restrictTo = (...roles) => {
+export const restrictTo = (...roles) => {
   return(req, res, next)=> {
     if (!roles.includes(req.user.role)) {
       return next(new AppError('Permission Denied', 403))

@@ -1,5 +1,5 @@
-const validator = require("validator");
-const mongoose = require("mongoose");
+import validator from 'validator';
+import mongoose from 'mongoose';
 
 const menuSchema = new mongoose.Schema({
   name: {
@@ -43,4 +43,4 @@ const menuSchema = new mongoose.Schema({
 });
 
 const Menu = mongoose.model("Menu", menuSchema);
-module.exports = Menu;
+export default Menu;

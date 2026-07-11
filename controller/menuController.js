@@ -1,10 +1,10 @@
-const APIFeatures = require("./../utils/apiFeatures");
-const catchAsync = require("./../utils/catchAsync");
-const AppError = require("./../utils/appError");
-const Menu = require("./../models/menuModel");
-const { menu } = require("../Config/permission");
+import catchAsync from './../utils/catchAsync.js';
+import AppError from './../utils/appError.js';
+import APIFeatures from '../utils/apiFeatures.js';
+import Menu from './../models/menuModel.js';
 
-exports.getAllMenu = catchAsync(async (req, res, next) => {
+
+export const getAllMenu = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Menu.find(), req.query)
     .filter()
     .search()
@@ -31,7 +31,7 @@ exports.getAllMenu = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getMenu = catchAsync(async (req, res, next) => {
+export const getMenu = catchAsync(async (req, res, next) => {
   const menu = await Menu.findById(req.params.id);
 
   if (!menu) {
@@ -46,7 +46,7 @@ exports.getMenu = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createMenu = catchAsync(async (req, res, next) => {
+export const createMenu = catchAsync(async (req, res, next) => {
   const menu = await Menu.create(req.body);
 
   res.status(201).json({
@@ -57,7 +57,7 @@ exports.createMenu = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createManyMenu = catchAsync(async (req, res, next) => {
+export const createManyMenu = catchAsync(async (req, res, next) => {
   const menuData = req.body.menu;
 
   const createdMenu = await Menu.insertMany(menuData);
@@ -69,7 +69,7 @@ exports.createManyMenu = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateMenu = catchAsync(async (req, res, next) => {
+export const updateMenu = catchAsync(async (req, res, next) => {
   const menu = await menu.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
@@ -88,7 +88,7 @@ exports.updateMenu = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteMenu= catchAsync(async (req, res, next) => {
+export const deleteMenu= catchAsync(async (req, res, next) => {
   const menu = await Menu.findByIdAndDelete(req.params.id);
 
   if (!menu) {

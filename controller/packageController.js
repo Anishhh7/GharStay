@@ -1,16 +1,16 @@
-const APIFeatures = require("./../utils/apiFeatures");
-const catchAsync = require("./../utils/catchAsync");
-const AppError = require("./../utils/appError");
-const Package = require("./../models/pacakageModel");
+import catchAsync from './../utils/catchAsync.js';
+import AppError from './../utils/appError.js';
+import APIFeatures from '../utils/apiFeatures.js';
+import Package from '../models/pacakageModel.js';
 
-exports.getAllPackages = catchAsync(async (req, res, next) => {
+export const getAllPackages = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Package.find(), req.query)
     .filter()
     .search()
     .sort()
     .paginate();
 
-  const packages = await features.query;
+  const pkgs = await features.query;
 
   const total = await Package.countDocuments({
     ...features.filterConditions
@@ -22,41 +22,41 @@ exports.getAllPackages = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "Success",
-    results: packages.length,
+    results: pkgs.length,
     total,
     page,
     totalPages,
-    data: packages
+    data: pkgs
   });
 });
 
-exports.getPackage = catchAsync(async (req, res, next) => {
-  const package = await Package.findById(req.params.id);
+export const getPackage = catchAsync(async (req, res, next) => {
+  const pkg = await Package.findById(req.params.id);
 
-  if (!package) {
+  if (!pkg) {
     return next(new AppError("No package found with that ID", 404));
   }
 
   res.status(200).json({
     status: "Success",
     data: {
-      package
+      pkg
     }
   });
 });
 
-exports.createPackage = catchAsync(async (req, res, next) => {
-  const package = await Package.create(req.body);
+export const createPackage = catchAsync(async (req, res, next) => {
+  const pkg = await Package.create(req.body);
 
   res.status(201).json({
     status: "success",
     data: {
-      package
+      pkg
     }
   });
 });
 
-exports.createManyPackages = catchAsync(async (req, res, next) => {
+export const createManyPackages = catchAsync(async (req, res, next) => {
   const packagesData = req.body.packages;
 
   const createdPackages = await Package.insertMany(packagesData);
@@ -68,29 +68,29 @@ exports.createManyPackages = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updatePackage = catchAsync(async (req, res, next) => {
-  const package = await Package.findByIdAndUpdate(req.params.id, req.body, {
+export const updatePackage = catchAsync(async (req, res, next) => {
+  const pkg = await Package.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
   });
 
-  if (!package) {
+  if (!pkg) {
     return next(new AppError("No package found with that ID", 404));
   }
 
   res.status(200).json({
     status: "Success",
     data: {
-      package
+      pkg
     },
     message: "Succesfully Updated"
   });
 });
 
-exports.deletePackage = catchAsync(async (req, res, next) => {
-  const package = await Package.findByIdAndDelete(req.params.id);
+export const deletePackage = catchAsync(async (req, res, next) => {
+  const pkg = await Package.findByIdAndDelete(req.params.id);
 
-  if (!package) {
+  if (!pkg) {
     return next(new AppError("No package found with that ID", 404));
   }
 
