@@ -1,0 +1,848 @@
+{
+  "info": {
+    "_postman_id": "e7cf30a9-2f24-4652-b6dd-7807b2b9d649",
+    "name": "GharStay",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54112721",
+    "_collection_link": "https://go.postman.co/collection/54112721-e7cf30a9-2f24-4652-b6dd-7807b2b9d649?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Room",
+      "item": [
+        {
+          "name": "Get All Rooms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/rooms",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "rooms"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CreateRoom",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"roomName\":\"Bcd\",\r\n    \"roomType\":\"Single\",\r\n    \"description\":\"haha ho rw thik xa tw\",\r\n    \"price\":4445,\r\n    \"occupancy\":2\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/rooms",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "rooms"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EditandUpdate Room",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amenities\":[\"AC\", \"24 hours wifi\"]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/rooms/6a5092adbd0a2c7d0ff22435",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "rooms",
+                "6a5092adbd0a2c7d0ff22435"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Room",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/rooms/6a5092adbd0a2c7d0ff22435",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "rooms",
+                "6a5092adbd0a2c7d0ff22435"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetRoom By Id",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/rooms/6a5094b9bd0a2c7d0ff22437",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "rooms",
+                "6a5094b9bd0a2c7d0ff22437"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "login superAdmin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"jwt\", pm.response.json().token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"owner@raithane.com\",\r\n    \"password\": \"ChangeThisPassword123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/users/login",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create newUser",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"anish\",\r\n    \"email\":\"test1@employee.io\",\r\n    \"password\":\"1234abc\",\r\n    \"role\":\"employee\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/users/createuser",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "createuser"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Staff Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"jwt\", pm.response.json().token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"test1@employee.io\",\r\n\"password\":\"1234abc\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/users/login",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"jwt\", pm.response.json().token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"tehiho1@gmail.com\",\r\n    \"password\":\"1234abc\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/users/login",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "packages",
+      "item": [
+        {
+          "name": "Delete Package",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "price",
+                "value": "1000",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Chitwan Jungle Safari\",\r\n  \"description\": \"Experience wildlife, jungle walks, canoe rides, and cultural performances in Chitwan National Park.\",\r\n  \"duration\": \"3 Days / 2 Nights\",\r\n  \"includedServices\": [\r\n    \"Hotel Stay\",\r\n    \"Breakfast\",\r\n    \"Lunch\",\r\n    \"Dinner\",\r\n    \"Jungle Safari\",\r\n    \"Canoe Ride\"\r\n  ],\r\n  \"price\": 250,\r\n  \"termsAndCondition\": [\r\n    \"Children under 5 are free.\",\r\n    \"Transportation to Chitwan is not included.\",\r\n    \"Guests should carry valid identification.\"\r\n  ],\r\n  \"images\": [\r\n    \"https://example.com/images/chitwan-1.jpg\",\r\n    \"https://example.com/images/chitwan-2.jpg\"\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/packages/6a50bb4008946e5a817b6db3",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "packages",
+                "6a50bb4008946e5a817b6db3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Package",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/packages/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "packages",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Package By Id",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/packages/6a50b8f5599eab0ae5f5ff5e",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "packages",
+                "6a50b8f5599eab0ae5f5ff5e"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create a package",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Lumbini Heritage Tour\",\r\n  \"description\": \"Explore the birthplace of Lord Buddha with guided visits to major monasteries, museums, and heritage sites.\",\r\n  \"duration\": \"2 Days / 1 Night\",\r\n  \"includedServices\": [\r\n    \"Hotel Accommodation\",\r\n    \"Breakfast\",\r\n    \"Private Transportation\",\r\n    \"Tour Guide\"\r\n  ],\r\n  \"price\": 220,\r\n  \"termsAndCondition\": [\r\n    \"Advance booking is required.\",\r\n    \"Personal expenses are not included.\",\r\n    \"Guests must carry a valid ID.\"\r\n  ],\r\n  \"images\": [\r\n    \"https://example.com/lumbini-1.jpg\",\r\n    \"https://example.com/lumbini-2.jpg\"\r\n  ],\r\n  \"featured\": false,\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/packages/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "packages",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Multiple Package Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"packages\": [\r\n    {\r\n      \"name\": \"Mustang Tour\",\r\n      \"description\": \"Explore the birthplace of Lord Buddha.\",\r\n      \"duration\": \"8 Days / 1 Night\",\r\n      \"price\": 22000\r\n    },\r\n    {\r\n      \"name\": \"Manang Tour\",\r\n      \"description\": \"Boating and paragliding in Pokhara.\",\r\n      \"duration\": \"7 Days / 3 Nights\",\r\n      \"price\": 25000\r\n    },\r\n    {\r\n      \"name\": \"Kushma \",\r\n      \"description\": \"Boating and paragliding in Pokhara.\",\r\n      \"duration\": \"7 Days / 3 Nights\",\r\n      \"price\": 25000\r\n    },\r\n    {\r\n      \"name\": \"Tilicho lake\",\r\n      \"description\": \"Boating and paragliding in Pokhara.\",\r\n      \"duration\": \"7 Days / 3 Nights\",\r\n      \"price\": 25000\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/packages/bulk",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "packages",
+                "bulk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Package",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"price\":500\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/packages/6a50b8f5599eab0ae5f5ff5e",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "packages",
+                "6a50b8f5599eab0ae5f5ff5e"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Menu-Item",
+      "item": [
+        {
+          "name": "Create Menu",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Masala Tea\",\r\n  \"description\": \"Freshly brewed milk tea with spices.\",\r\n  \"price\": 60,\r\n  \"category\": \"Beverages\",\r\n  \"veg\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/menu-item/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "menu-item",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Menu",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/menu-item/",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "menu-item",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Menu By Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/menu-item/6a5129e386e3afbc8294ada4",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "menu-item",
+                "6a5129e386e3afbc8294ada4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Menu",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/menu-item/6a5129e386e3afbc8294ada4",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "menu-item",
+                "6a5129e386e3afbc8294ada4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Multiple Menu",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"menu\":[\r\n        \r\n  {\r\n    \"name\": \"Chicken Momo\",\r\n    \"price\": 180,\r\n    \"category\": \"Local Special\",\r\n    \"popular\": true\r\n  },\r\n  {\r\n    \"name\": \"Veg Chowmein\",\r\n    \"price\": 160,\r\n    \"category\": \"Nepali Cuisine\",\r\n    \"veg\": true\r\n  },\r\n  {\r\n    \"name\": \"Buff Sekuwa\",\r\n    \"price\": 350,\r\n    \"category\": \"Snacks\"\r\n  },\r\n  {\r\n    \"name\": \"Pancake\",\r\n    \"price\": 150,\r\n    \"category\": \"Breakfast\",\r\n    \"veg\": true\r\n  },\r\n  {\r\n    \"name\": \"Cold Coffee\",\r\n    \"price\": 140,\r\n    \"category\": \"Beverages\"\r\n  },\r\n  {\r\n    \"name\": \"Chocolate Brownie\",\r\n    \"price\": 200,\r\n    \"category\": \"Dessserts\",\r\n    \"veg\": true\r\n  }\r\n]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:3000/api/v1/menu-item/bulk",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "menu-item",
+                "bulk"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
