@@ -165,7 +165,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://127.0.0.1:3000/api/v1/rooms/6a5094b9bd0a2c7d0ff22437",
+              "raw": "http://127.0.0.1:3000/api/v1/rooms/6a5095330b381b1e5e795fd0",
               "protocol": "http",
               "host": [
                 "127",
@@ -178,7 +178,7 @@
                 "api",
                 "v1",
                 "rooms",
-                "6a5094b9bd0a2c7d0ff22437"
+                "6a5095330b381b1e5e795fd0"
               ]
             }
           },
@@ -219,7 +219,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"owner@raithane.com\",\r\n    \"password\": \"ChangeThisPassword123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"admin@gharstay.com\",\r\n    \"password\": \"passlogin123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -744,7 +744,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://127.0.0.1:3000/api/v1/menu-item/6a5129e386e3afbc8294ada4",
+              "raw": "http://127.0.0.1:3000/api/v1/menu-item/6a512f27320ad216883c70b8",
               "protocol": "http",
               "host": [
                 "127",
@@ -757,7 +757,7 @@
                 "api",
                 "v1",
                 "menu-item",
-                "6a5129e386e3afbc8294ada4"
+                "6a512f27320ad216883c70b8"
               ]
             }
           },
@@ -836,6 +836,1104 @@
                 "api",
                 "v1",
                 "menu-item",
+                "bulk"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Blogs",
+      "item": [
+        {
+          "name": "Search",
+          "item": [
+            {
+              "name": "Pagination",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/blogs?page=1&limit=3",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "blogs"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "3"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Sort by Title",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}} /api/v1/blogs?sort=title",
+                  "host": [
+                    "{{URL}} "
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "blogs"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "title"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Filter(category)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/blogs?category=Food",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "blogs"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "Food"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Filter(active)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/blogs?published=true",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "blogs"
+                  ],
+                  "query": [
+                    {
+                      "key": "published",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search(name/title)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}} /api/v1/blogs?search=resort",
+                  "host": [
+                    "{{URL}} "
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "blogs"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "resort"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Combined serach",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}} /api/v1/blogs?published=true&search=resort&page=1&limit=5",
+                  "host": [
+                    "{{URL}} "
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "blogs"
+                  ],
+                  "query": [
+                    {
+                      "key": "published",
+                      "value": "true"
+                    },
+                    {
+                      "key": "search",
+                      "value": "resort"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Blogs",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Family Weekend Getaway Guide\",\r\n  \"content\": \"Plan an unforgettable family vacation with our spacious rooms, swimming pool, children's play area, and evening entertainment.\",\r\n  \"category\": \"Travel\",\r\n  \"slug\": \"family-weekend-getaway-guide\",\r\n  \"coverImage\": \"https://images.unsplash.com/photo-1506744038136-46273834b3fb\",\r\n  \"published\": true,\r\n  \"metaTitle\": \"Family Weekend Getaway\",\r\n  \"metaDescription\": \"Everything you need to know before planning your family vacation.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/blogs",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "blogs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Blogs",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"anish\",\r\n    \"email\": \"test@1.io\",\r\n    \"password\":\"pass1234\",\r\n    \"passwordConfirm\":\"pass1234\"\r\n}"
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/blogs",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "blogs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Blog by Id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"anish\",\r\n    \"email\": \"test@1.io\",\r\n    \"password\":\"pass1234\",\r\n    \"passwordConfirm\":\"pass1234\"\r\n}"
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/blogs/6a538b4a4e498f3d37b25986",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "blogs",
+                "6a538b4a4e498f3d37b25986"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Blog",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\":\"Famuly Weekend Guide\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/blogs/6a538b4a4e498f3d37b25986",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "blogs",
+                "6a538b4a4e498f3d37b25986"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Blog",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\":\"Famuly Weekend Guide\"\r\n}"
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/blogs/6a538b4a4e498f3d37b25986",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "blogs",
+                "6a538b4a4e498f3d37b25986"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Search query",
+          "item": [
+            {
+              "name": "Date Filter",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/events?date=2026-11-20",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-11-20"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Sorting-newest First",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/events?sort=-date",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "-date"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "pagination",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/events?page=2&limit=2",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "2"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Filter(Category)",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/events?category=Weddings",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "Weddings"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Filter(active)",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/events?active=true",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search(name/title)",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}} /api/v1/events?search=wedding",
+                  "host": [
+                    "{{URL}} "
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "wedding"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "combined search",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/events?category=Birthday&active=true&sort=-date&page=1&limit=10",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "Birthday"
+                    },
+                    {
+                      "key": "active",
+                      "value": "true"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "-date"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create a Events",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Traditional Cultural Night\",\r\n  \"description\": \"Experience local culture through folk dances, live music, traditional cuisine, and cultural performances.\",\r\n  \"date\": \"2026-10-05\",\r\n  \"category\": \"Cultural Programs\",\r\n  \"image\": [\r\n    \"https://images.unsplash.com/photo-1503095396549-807759245b35\"\r\n  ],\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/events",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Events",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Family Weekend Getaway Guide\",\r\n  \"content\": \"Plan an unforgettable family vacation with our spacious rooms, swimming pool, children's play area, and evening entertainment.\",\r\n  \"category\": \"Travel\",\r\n  \"slug\": \"family-weekend-getaway-guide\",\r\n  \"coverImage\": \"https://images.unsplash.com/photo-1506744038136-46273834b3fb\",\r\n  \"published\": true,\r\n  \"metaTitle\": \"Family Weekend Getaway\",\r\n  \"metaDescription\": \"Everything you need to know before planning your family vacation.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/events",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"active\":\"false\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/events/6a53b881a9a86a7a5ec3c338",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "events",
+                "6a53b881a9a86a7a5ec3c338"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get events by ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/events/6a53b881a9a86a7a5ec3c338",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "events",
+                "6a53b881a9a86a7a5ec3c338"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/events/6a53b881a9a86a7a5ec3c338",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "events",
+                "6a53b881a9a86a7a5ec3c338"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gallery",
+      "item": [
+        {
+          "name": "Search",
+          "item": [
+            {
+              "name": "Search by Title",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}} /api/v1/gallery?search=pool",
+                  "host": [
+                    "{{URL}} "
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "gallery"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "pool"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Category(Room)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/gallery?search=room",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "gallery"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "room"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Filter(category)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/gallery?category=Restaurant",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "gallery"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "Restaurant"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Filter",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}} /api/v1/gallery?category=Swimming%20Pool",
+                  "host": [
+                    "{{URL}} "
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "gallery"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "Swimming%20Pool"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Featured",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}} /api/v1/gallery?featured=true",
+                  "host": [
+                    "{{URL}} "
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "gallery"
+                  ],
+                  "query": [
+                    {
+                      "key": "featured",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Sorting/Title",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}} /api/v1/gallery?sort=title",
+                  "host": [
+                    "{{URL}} "
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "gallery"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "title"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "sorting/descending",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/gallery?sort=-title",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "gallery"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "-title"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "GetAll Gallery",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}} /api/v1/gallery",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gallery"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by ID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Luxury Family Suite\",\r\n  \"mediaType\": \"Image\",\r\n  \"url\": \"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267\",\r\n  \"category\": \"Rooms\",\r\n  \"featured\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/gallery/6a53c4be0b1e7f815bb99f78",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gallery",
+                "6a53c4be0b1e7f815bb99f78"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update gallery",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Resort Promotional Video\",\r\n  \"mediaType\": \"Video\",\r\n  \"url\": \"https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4\",\r\n  \"category\": \"Resort Activities\",\r\n  \"featured\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/gallery/",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gallery",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"featured\": true\r\n}"
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/gallery/6a53c4be0b1e7f815bb99f78",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gallery",
+                "6a53c4be0b1e7f815bb99f78"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create many Gallery",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"gallery\": [\r\n    {\r\n      \"title\": \"Deluxe Room Interior\",\r\n      \"mediaType\": \"Image\",\r\n      \"url\": \"https://images.unsplash.com/photo-1566073771259-6a8506099945\",\r\n      \"category\": \"Rooms\"\r\n    },\r\n    {\r\n      \"title\": \"Infinity Swimming Pool\",\r\n      \"mediaType\": \"Image\",\r\n      \"url\": \"https://images.unsplash.com/photo-1571896349842-33c89424de2d\",\r\n      \"category\": \"Swimming Pool\"\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/gallery/bulk",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gallery",
                 "bulk"
               ]
             }
