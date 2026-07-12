@@ -22,10 +22,27 @@ class APIFeatures {
   search() {
     if (this.queryString.search) {
       const searchCondition = {
-        title: {
-          $regex: this.queryString.search,
-          $options: "i"
-        }
+        $or: [
+          {
+            name: {
+              $regex: this.queryString.search,
+              $options: "i"
+            }
+          },
+          {
+            title: {
+              $regex: this.queryString.search,
+              $options: "i"
+            }
+          },
+          {
+            roomName: {
+              $regex: this.queryString.search,
+              $options: "i"
+            }
+          },
+          
+        ]
       };
       this.filterConditions = { ...this.filterConditions, ...searchCondition };
       this.query = this.query.find(searchCondition);
@@ -42,12 +59,17 @@ class APIFeatures {
     }
     return this;
   }
-  paginate() {
-    const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 100;
-    const skip = (page - 1) * limit;
+  pagination() {
+    this.page = Math.max(1, Number(this.queryString.page) || 1);
+    this.limit = Math.min(
+      100,
+      Math.max(1, Number(this.queryString.limit) || 10)
+    );
 
-    this.query = this.query.skip(skip).limit(limit);
+    const skip = (this.page - 1) * this.limit;
+
+    this.query = this.query.skip(skip).limit(this.limit);
+
     return this;
   }
 }

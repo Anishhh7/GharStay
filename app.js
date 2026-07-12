@@ -5,6 +5,9 @@ import userRouter from './Router/userRouter.js'
 import roomRouter from './Router/roomRouter.js'
 import packageRouter from './Router/packageRouter.js'
 import menuRouter from './Router/menuRouter.js'
+import blogRouter from './Router/blogRouter.js'
+import eventRouter from './Router/eventRouter.js';
+import galleryRouter from './Router/galleryRouter.js';
 
 
 
@@ -21,6 +24,9 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/rooms", roomRouter);
 app.use('/api/v1/packages', packageRouter);
 app.use('/api/v1/menu-item', menuRouter);
+app.use('/api/v1/blogs', blogRouter);
+app.use('/api/v1/events', eventRouter);
+app.use('/api/v1/gallery', galleryRouter);
 
 app.all('/{*path}', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));

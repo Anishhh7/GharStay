@@ -8,23 +8,19 @@ export const getAllRooms = catchAsync(async (req, res, next) => {
         .filter()
         .search()
         .sort()
-        .paginate();
+        .pagination()
 
   const rooms = await features.query;
+  
+  const total = await Room.countDocuments(features.filterConditions);
+  const totalPages = Math.ceil(total / features.limit);
 
-  const total = await Room.countDocuments({
-    ...features.filterConditions
-  });
-
-  const limit = req.query.limit * 1 || 100;
-  const page = req.query.pag * 1 || 1;
-  const totalPages = Math.ceil(total / limit);
 
   res.status(200).json({
     status: "Success",
     results: rooms.length,
     total,
-    page,
+    page:features.page,
     totalPages,
     data: rooms
   });

@@ -9,7 +9,7 @@ export const getAllMenu = catchAsync(async (req, res, next) => {
     .filter()
     .search()
     .sort()
-    .paginate();
+    .pagination()
 
   const menu = await features.query;
 
@@ -70,7 +70,7 @@ export const createManyMenu = catchAsync(async (req, res, next) => {
 });
 
 export const updateMenu = catchAsync(async (req, res, next) => {
-  const menu = await menu.findByIdAndUpdate(req.params.id, req.body, {
+  const menu = await Menu.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
   });

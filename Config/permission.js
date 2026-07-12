@@ -1,4 +1,4 @@
-export default{
+export default {
   users: {
     create: ["superAdmin"],
     readAll: ["superAdmin"],
@@ -22,5 +22,20 @@ export default{
     create: ["admin", "superAdmin"],
     update: ["admin", "superAdmin"],
     delete: ["admin", "superAdmin"]
-  }
+  },
+  gallery: {
+    create: ["superAdmin"],
+    update: ["superAdmin"],
+    delete: ["superAdmin"]
+  },
+  events: {
+    create: ["superAdmin"],
+    update: ["superAdmin"],
+    delete: ["superAdmin"]
+  },
+  blog: {
+    create: ["superAdmin"],
+    update: ["superAdmin"],
+    delete: ["superAdmin"]
+  },
 };

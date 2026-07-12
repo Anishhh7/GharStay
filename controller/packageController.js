@@ -8,7 +8,7 @@ export const getAllPackages = catchAsync(async (req, res, next) => {
     .filter()
     .search()
     .sort()
-    .paginate();
+    .pagination()
 
   const pkgs = await features.query;
 
@@ -56,17 +56,6 @@ export const createPackage = catchAsync(async (req, res, next) => {
   });
 });
 
-export const createManyPackages = catchAsync(async (req, res, next) => {
-  const packagesData = req.body.packages;
-
-  const createdPackages = await Package.insertMany(packagesData);
-
-  res.status(201).json({
-    status: "success",
-    results: createdPackages.length,
-    data: createdPackages
-  });
-});
 
 export const updatePackage = catchAsync(async (req, res, next) => {
   const pkg = await Package.findByIdAndUpdate(req.params.id, req.body, {

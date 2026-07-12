@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Router } from 'express';
 import * as RoomController from './../controller/roomController.js';
 import * as authController from './../controller/authController.js'
 import permission from './../Config/permission.js';

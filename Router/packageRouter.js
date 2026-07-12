@@ -15,10 +15,6 @@ router
     authController.restrictTo(...permission.packages.create),
     PackageController.createPackage
   )
-  router.route('/bulk').post(
-    authController.restrictTo(...permission.packages.create),
-    PackageController.createManyPackages
-  );
 
 router
   .route("/:id")
