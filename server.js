@@ -1,7 +1,10 @@
 import dotenv from 'dotenv'
 dotenv.config({ path: "./Config/config.env" });
+import { globalTimestampFormatter } from './utils/mongoosePlugins.js';
 import mongoose from 'mongoose';
+mongoose.plugin(globalTimestampFormatter);
 import app from './app.js';
+
 
 
 const DB = process.env.DATABASE.replace(

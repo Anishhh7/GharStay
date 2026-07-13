@@ -37,7 +37,7 @@ const packageSchema = new mongoose.Schema({
   }
 },
  {
-    timeStamps:true
+    timestamps:true
 });
 
 const Package = mongoose.models.Package|| mongoose.model("Package", packageSchema);

@@ -48,7 +48,7 @@ const roomSchema = new mongoose.Schema({
   }
 },
  {
-    timeStamps:true
+    timestamps:true
 });
 
 const Room = mongoose.models.Room|| mongoose.model("Room", roomSchema);

@@ -28,7 +28,7 @@ const gallerySchema = new mongoose.Schema({
     }
 },
  {
-    timeStamps:true
+    timestamps:true
 });
 
 const Gallery = mongoose.models.Gallery|| mongoose.model('Gallery', gallerySchema);

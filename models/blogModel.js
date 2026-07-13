@@ -34,15 +34,14 @@ const blogSchema = new mongoose.Schema(
     }
   },
   {
-    timeStamps: true
+    timestamps: true
   }
 );
 
-blogSchema.pre("save", function () {
+blogSchema.pre("save", async function () {
   if (this.isModified("title")) {
     this.slug = slugify(this.title, { lower: true, strict: true });
   }
-  next();
 });
 
 const Blog = mongoose.models.Blog || mongoose.model("Blog", blogSchema);

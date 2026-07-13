@@ -42,7 +42,7 @@ const menuSchema = new mongoose.Schema({
   }
 },
  {
-    timeStamps:true
+    timestamps:true
 });
 
 const Menu = mongoose.models.Menu|| mongoose.model("Menu", menuSchema);

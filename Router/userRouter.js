@@ -8,6 +8,7 @@ const router = express.Router();
 router.post("/login", authController.logIn);
 
 router.use(authController.protect);
+
 router.use(authController.restrictTo(...permission.users.create));
 
 router.route("/").get(userController.getAllUsers);
