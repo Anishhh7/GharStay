@@ -1,31 +1,41 @@
 import mongoose from "mongoose";
 
-const eventSchema = new mongoose.Schema({
-    
+const eventSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     },
     description: {
-        type: String
+      type: String
     },
     date: {
-        type: Date,
-        required: true
+      type: Date,
+      required: true
     },
     category: {
-        type: String,
-        enum: ['Weddings', 'Corporate Events', 'Birthday', 'Family Gatherings', 'Cultural Programs'],
-        required: true
+      type: String,
+      enum: [
+        "Weddings",
+        "Corporate Events",
+        "Birthday",
+        "Family Gatherings",
+        "Cultural Programs"
+      ],
+      required: true
     },
     image: {
-        type: Array
+      type: Array
     },
     active: {
-        type: Boolean,
-        default: true
+      type: Boolean,
+      default: true
     }
-});
+  },
+  {
+    timeStamps: true
+  }
+);
 
-const Events = mongoose.model('Events', eventSchema);
-export default Events;
+const Event = mongoose.models.Event || mongoose.model("Event", eventSchema);
+export default Event;

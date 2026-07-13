@@ -26,7 +26,10 @@ const gallerySchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
+},
+ {
+    timeStamps:true
 });
 
-const Gallery = mongoose.model('Gallery', gallerySchema);
+const Gallery = mongoose.models.Gallery|| mongoose.model('Gallery', gallerySchema);
 export default Gallery;

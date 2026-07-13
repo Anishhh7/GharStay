@@ -35,7 +35,10 @@ const packageSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
+},
+ {
+    timeStamps:true
 });
 
-const Package = mongoose.model("Package", packageSchema);
+const Package = mongoose.models.Package|| mongoose.model("Package", packageSchema);
 export default Package;

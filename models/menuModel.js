@@ -40,7 +40,10 @@ const menuSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
+},
+ {
+    timeStamps:true
 });
 
-const Menu = mongoose.model("Menu", menuSchema);
+const Menu = mongoose.models.Menu|| mongoose.model("Menu", menuSchema);
 export default Menu;
