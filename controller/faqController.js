@@ -24,7 +24,7 @@ export const createFaq = catchAsync(async (req, res, next) => {
 
 export const updateFaq = catchAsync(async (req, res, next) => {
   const faq = await FAQ.findByIdAndUpdate(req.params.id, req.body, {
-    returnDocument: true,
+    returnDocument: 'after',
     runValidators: true
   });
 

@@ -2,8 +2,6 @@ import catchAsync from './../utils/catchAsync.js';
 import AppError from './../utils/appError.js';
 import User from '../models/userModel.js';
 
-
-
 const filterObj = (obj, ...allowFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
@@ -16,30 +14,30 @@ export const getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
 
   res.status(200).json({
-    status: "Success",
+    status: 'Success',
     results: users.length,
-    data: users
+    data: users,
   });
 });
 
 export const createUser = catchAsync(async (req, res, next) => {
   const { name, email, password, role } = req.body;
 
-  if (!["employee", "admin"].includes(req.body.role)) {
-    return next(new AppError("you are not authorized", 401));
+  if (!['employee', 'admin'].includes(req.body.role)) {
+    return next(new AppError('you are not authorized', 401));
   }
 
   const user = await User.create({
     name,
     email,
     password,
-    role
+    role,
   });
 
   res.status(200).json({
-    status: "Success",
+    status: 'Success',
     data: user,
-    message: "User created sucessfully"
+    message: 'User created sucessfully',
   });
 });
 
@@ -50,33 +48,33 @@ export const createManyUsers = catchAsync(async (req, res, next) => {
   );
 
   res.status(201).json({
-    status: "success",
+    status: 'success',
     results: createdUsers.length,
-    data: createdUsers
+    data: createdUsers,
   });
 });
 
 export const updateUser = catchAsync(async (req, res, next) => {
-  if (req.body.role && !["employee", "admin"].includes(req.body.role)) {
-    return next(new AppError("Invalid role", 400));
+  if (req.body.role && !['employee', 'admin'].includes(req.body.role)) {
+    return next(new AppError('Invalid role', 400));
   }
 
-  const filterBody = filterObj(req.body, "name", "email", "role", "active");
+  const filterBody = filterObj(req.body, 'name', 'email', 'role', 'active');
 
   const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
-    new: true,
-    runValidators: true
+   returnDocument: 'after',
+    runValidators: true,
   });
 
   if (!updatedUser) {
-    return next(new AppError("No user found with that ID", 404));
+    return next(new AppError('No user found with that ID', 404));
   }
 
   res.status(200).json({
-    status: "Success",
+    status: 'Success',
     data: {
-      user: updateUser
+      user: updateUser,
     },
-    message: "updated sucessfully"
+    message: 'updated sucessfully',
   });
 });
