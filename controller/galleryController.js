@@ -10,19 +10,14 @@ export const getAllGalleryItem = catchAsync(async (req, res, next) => {
   .sort()
   .pagination();
  const gallery = await features.query;
- const total = await Gallery.countDocuments({
-  ...features.filterConditions
- });
-
- const limit = req.query.limit * 1 || 100;
- const page = req.query.pag * 1 || 1;
- const totalPages = Math.ceil(total / limit);
+ const total = await Gallery.countDocuments(features.filterConditions);
+ const totalPages = Math.ceil(total / features.limit);
 
  res.status(201).json({
   status: "Success",
   results: gallery.length,
   total,
-  page,
+  page: features.page,
   totalPages,
   data: {
    gallery
@@ -68,7 +63,7 @@ export const createManyGalleryItems = catchAsync(async (req, res, next) => {
 
 export const updateGalleryItems = catchAsync(async (req, res, next) => {
  const gallery = await Gallery.findByIdAndUpdate(req.params.id, req.body, {
-  new: true,
+  returnDocument:"after",
   runValidators: true
  });
 

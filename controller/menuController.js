@@ -13,19 +13,15 @@ export const getAllMenu = catchAsync(async (req, res, next) => {
 
   const menu = await features.query;
 
-  const total = await Menu.countDocuments({
-    ...features.filterConditions
-  });
+  const total = await Menu.countDocuments(features.filterConditions);
 
-  const limit = req.query.limit * 1 || 100;
-  const page = req.query.pag * 1 || 1;
-  const totalPages = Math.ceil(total / limit);
+  const totalPages = Math.ceil(total / features.limit);
 
   res.status(200).json({
     status: "Success",
     results: menu.length,
     total,
-    page,
+    page:features.page,
     totalPages,
     data: menu
   });
@@ -71,7 +67,7 @@ export const createManyMenu = catchAsync(async (req, res, next) => {
 
 export const updateMenu = catchAsync(async (req, res, next) => {
   const menu = await Menu.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
+    returnDocument: 'after',
     runValidators: true
   });
 

@@ -47,7 +47,7 @@ export const createEvent = catchAsync(async (req, res, next) => {
 
 export const updateEvent = catchAsync(async (req, res, next) => {
   const event = await Events.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
+    returnDocument: 'after',
     runValidators: true
   });
 

@@ -12,19 +12,15 @@ export const getAllPackages = catchAsync(async (req, res, next) => {
 
   const pkgs = await features.query;
 
-  const total = await Package.countDocuments({
-    ...features.filterConditions
-  });
+  const total = await Package.countDocuments(features.filterConditions);
 
-  const limit = req.query.limit * 1 || 100;
-  const page = req.query.pag * 1 || 1;
-  const totalPages = Math.ceil(total / limit);
+  const totalPages = Math.ceil(total / features.limit);
 
   res.status(200).json({
     status: "Success",
     results: pkgs.length,
     total,
-    page,
+    page:features.page,
     totalPages,
     data: pkgs
   });
@@ -59,7 +55,7 @@ export const createPackage = catchAsync(async (req, res, next) => {
 
 export const updatePackage = catchAsync(async (req, res, next) => {
   const pkg = await Package.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
+    returnDocument:'after',
     runValidators: true
   });
 
