@@ -60,5 +60,8 @@ export default {
     update: ['superAdmin', 'admin'],
     updateAll: ['superAdmin'],
     delete: ['superAdmin'],
+    },
+   dashboard: {
+    readAll: ['superAdmin'],
   },
 };

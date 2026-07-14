@@ -15,6 +15,7 @@ import contactRouter from './Router/contactRouter.js';
 import faqRouter from './Router/faqRouter.js';
 import tesimonialRouter from './Router/tesimonialRouter.js';
 import reservationRouter from './Router/reservationRouter.js';
+import dashboardRouter from './Router/dashboardRouter.js';
 
 const app = express();
 app.set('query parser', 'extended');
@@ -43,6 +44,8 @@ app.use('/api/v1/contacts', contactRouter);
 app.use('/api/v1/faqs', faqRouter);
 app.use('/api/v1/testimonials', tesimonialRouter);
 app.use('/api/v1/reservation', reservationRouter);
+app.use('/api/v1/dashboards', dashboardRouter);
+
 
 
 
