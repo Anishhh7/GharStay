@@ -51,7 +51,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"roomName\":\"Bcd\",\r\n    \"roomType\":\"Single\",\r\n    \"description\":\"haha ho rw thik xa tw\",\r\n    \"price\":4445,\r\n    \"occupancy\":2\r\n\r\n}",
+              "raw": "{\r\n    \"roomName\":\"345\",\r\n    \"roomType\":\"Single\",\r\n    \"description\":\"haha ho rw thik xa tw\",\r\n    \"price\":4445,\r\n    \"occupancy\":2\r\n\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1935,6 +1935,652 @@
                 "v1",
                 "gallery",
                 "bulk"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "item": [
+        {
+          "name": "Create contact",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201 or 200\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response returns valid json data\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.status).to.eql(\"Success\");\r",
+                  "    pm.expect(jsonData.data.email).to.include(\"@\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"john@example.com\",\r\n  \"phone\": \"9812345678\",\r\n  \"message\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sample text to push it over 500 chars.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/contacts",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all Contact/Inquires",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}} /api/v1/contacts/",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contacts",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Contact",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{URL}} /api/v1/contacts/6a54cc1bc52f74bb498383d7",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contacts",
+                "6a54cc1bc52f74bb498383d7"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "FAQ",
+      "item": [
+        {
+          "name": "Get All FAQ",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"john@example.com\",\r\n  \"phone\": \"9812345678\",\r\n  \"message\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sample text to push it over 500 chars.\"\r\n}"
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/faqs",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "faqs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create a FAQ",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"question\": \"Could you please provide me with an exceptionally detailed explanation ?\",\r\n  \"answer\": \"Yes, just navigate to your profile settings page and click the edit button next to your email address.\",\r\n  \"category\": \"Account\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/faqs",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "faqs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete FAQ",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/faqs/6a54cf11e8f220f9590baf5c",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "faqs",
+                "6a54cf11e8f220f9590baf5c"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update FAQ",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"category\":\"Booking\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/faqs/6a54ceefe8f220f9590baf5a",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "faqs",
+                "6a54ceefe8f220f9590baf5a"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Testimonial",
+      "item": [
+        {
+          "name": "Get All Active Testinomial",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"john@example.com\",\r\n  \"phone\": \"9812345678\",\r\n  \"message\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sample text to push it over 500 chars.\"\r\n}"
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/testimonials",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "testimonials"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create a Testimonial",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"customerName\": \"Elena Rostova\",\r\n  \"rating\": 4,\r\n  \"message\": \"The systems integration went smoothly, and the setup is incredibly stable.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/testimonials",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "testimonials"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Testinomials",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}} /api/v1/testimonials/all",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "testimonials",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Testinomial",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{URL}} /api/v1/testimonials/6a54dab4be177f0ca0b6db67",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "testimonials",
+                "6a54dab4be177f0ca0b6db67"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update testinomial",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"approved\":\"true\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}} /api/v1/testimonials/6a54dab4be177f0ca0b6db67",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "testimonials",
+                "6a54dab4be177f0ca0b6db67"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reservation",
+      "item": [
+        {
+          "name": "Get All Reservation",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/reservation",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reservation"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create a Reservation",
+          "request": {
+            "method": "POST",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Update All data(Super Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\":\"Cancelled\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/reservation/6a5618d4e98f28172a9f9982",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reservation",
+                "6a5618d4e98f28172a9f9982"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Reservation by Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/reservation/6a562296dd71a57a8e73cf5b",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reservation",
+                "6a562296dd71a57a8e73cf5b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/reservation/6a562296dd71a57a8e73cf5b",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reservation",
+                "6a562296dd71a57a8e73cf5b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateStatus(Staff/admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\":\"Approved\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/reservation/6a562296dd71a57a8e73cf5b/status",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reservation",
+                "6a562296dd71a57a8e73cf5b",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "getAllstats",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}} /api/v1/dashboards",
+              "host": [
+                "{{URL}} "
+              ],
+              "path": [
+                "api",
+                "v1",
+                "dashboards"
               ]
             }
           },
