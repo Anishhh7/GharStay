@@ -2,6 +2,8 @@ import catchAsync from './../utils/catchAsync.js';
 import AppError from './../utils/appError.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Room from '../models/roomModel.js';
+import uploadToCloudinary from '../utils/uploadToCloudinary.js';
+
 
 export const getAllRooms = catchAsync(async (req, res, next) => {
     const features = new APIFeatures(Room.find(), req.query)
@@ -42,8 +44,12 @@ export const getRoom = catchAsync(async (req, res, next) => {
 });
 
 export const createRoom = catchAsync(async (req, res, next) => {
-  const room = await Room.create(req.body);
+   const images = await Promise.all(
+  req.files.map((file) => uploadToCloudinary(file.buffer, 'gharstay/rooms'))
+);
 
+
+  const room = await Room.create({...req.body, images:images});
   res.status(201).json({
     status: "success",
     data: {

@@ -2,6 +2,7 @@ import APIFeatures from "../utils/apiFeatures.js";
 import AppError from "../utils/appError.js";
 import catchAsync from "../utils/catchAsync.js";
 import Events from "../models/eventsModel.js";
+import uploadToCloudinary from "../utils/uploadToCloudinary.js";
 
 export const getAllEvents = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Events.find(), req.query)
@@ -36,7 +37,9 @@ export const getEvent = catchAsync(async (req, res, next) => {
 });
 
 export const createEvent = catchAsync(async (req, res, next) => {
-  const event = await Events.create(req.body);
+  const image = await uploadToCloudinary(file.buffer, 'gharstay/events')
+
+  const event = await Events.create({...req.body, images:image});
 
   res.status(201).json({
     status: "Success",

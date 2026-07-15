@@ -64,4 +64,10 @@ export default {
    dashboard: {
     readAll: ['superAdmin'],
   },
+  website: {
+     update:['superAdmin']
+  },
+  newsletter: {
+    readAll:['superAdmin']
+  }
 };

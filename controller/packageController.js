@@ -2,13 +2,14 @@ import catchAsync from './../utils/catchAsync.js';
 import AppError from './../utils/appError.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Package from '../models/pacakageModel.js';
+import uploadToCloudinary from '../utils/uploadToCloudinary.js';
 
 export const getAllPackages = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Package.find(), req.query)
     .filter()
     .search()
     .sort()
-    .pagination()
+    .pagination();
 
   const pkgs = await features.query;
 
@@ -17,12 +18,12 @@ export const getAllPackages = catchAsync(async (req, res, next) => {
   const totalPages = Math.ceil(total / features.limit);
 
   res.status(200).json({
-    status: "Success",
+    status: 'Success',
     results: pkgs.length,
     total,
-    page:features.page,
+    page: features.page,
     totalPages,
-    data: pkgs
+    data: pkgs,
   });
 });
 
@@ -30,45 +31,46 @@ export const getPackage = catchAsync(async (req, res, next) => {
   const pkg = await Package.findById(req.params.id);
 
   if (!pkg) {
-    return next(new AppError("No package found with that ID", 404));
+    return next(new AppError('No package found with that ID', 404));
   }
 
   res.status(200).json({
-    status: "Success",
+    status: 'Success',
     data: {
-      pkg
-    }
+      pkg,
+    },
   });
 });
 
 export const createPackage = catchAsync(async (req, res, next) => {
-  const pkg = await Package.create(req.body);
+  const image = await uploadToCloudinary(file.buffer, 'gharstay/packages');
+
+  const pkg = await Package.create({ ...req.body, images: image });
 
   res.status(201).json({
-    status: "success",
+    status: 'success',
     data: {
-      pkg
-    }
+      pkg,
+    },
   });
 });
 
-
 export const updatePackage = catchAsync(async (req, res, next) => {
   const pkg = await Package.findByIdAndUpdate(req.params.id, req.body, {
-    returnDocument:'after',
-    runValidators: true
+    returnDocument: 'after',
+    runValidators: true,
   });
 
   if (!pkg) {
-    return next(new AppError("No package found with that ID", 404));
+    return next(new AppError('No package found with that ID', 404));
   }
 
   res.status(200).json({
-    status: "Success",
+    status: 'Success',
     data: {
-      pkg
+      pkg,
     },
-    message: "Succesfully Updated"
+    message: 'Succesfully Updated',
   });
 });
 
@@ -76,12 +78,12 @@ export const deletePackage = catchAsync(async (req, res, next) => {
   const pkg = await Package.findByIdAndDelete(req.params.id);
 
   if (!pkg) {
-    return next(new AppError("No package found with that ID", 404));
+    return next(new AppError('No package found with that ID', 404));
   }
 
   res.status(204).json({
-    status: "Success",
+    status: 'Success',
     data: null,
-    message: "Deleted Succesfuly"
+    message: 'Deleted Succesfuly',
   });
 });

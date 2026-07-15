@@ -24,8 +24,8 @@ const eventSchema = new mongoose.Schema(
       ],
       required: true
     },
-    image: {
-      type: Array
+    images: {
+      type: String
     },
     active: {
       type: Boolean,

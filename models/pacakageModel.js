@@ -24,8 +24,8 @@ const packageSchema = new mongoose.Schema({
   termsAndCondition: {
     type: [String]
   },
-  images: {
-    type: [String]
+  image: {
+    type: String
   },
   featured: {
     type: Boolean,

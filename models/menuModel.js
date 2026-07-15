@@ -25,8 +25,8 @@ const menuSchema = new mongoose.Schema({
     ]
   },
 
-  image: {
-    type: [String]
+  images: {
+    type: String
   },
   veg: {
     type: Boolean,

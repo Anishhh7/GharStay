@@ -1,9 +1,13 @@
 import dotenv from 'dotenv'
 dotenv.config({ path: "./Config/config.env" });
-import {globalTimestampFormatter}  from './utils/mongoosePlugins.js';
-mongoose.plugin(globalTimestampFormatter);
+dotenv.config({ path: './Config/cloudinary.env' });
+
 import mongoose from 'mongoose';
-import app from './app.js';
+import { globalTimestampFormatter } from './utils/mongoosePlugins.js';
+
+mongoose.plugin(globalTimestampFormatter);
+
+const {default:app} = await import('./app.js');
 
 
 

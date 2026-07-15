@@ -2,6 +2,7 @@ import catchAsync from './../utils/catchAsync.js';
 import AppError from './../utils/appError.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Menu from './../models/menuModel.js';
+import uploadToCloudinary from '../utils/uploadToCloudinary.js';
 
 
 export const getAllMenu = catchAsync(async (req, res, next) => {
@@ -43,7 +44,9 @@ export const getMenu = catchAsync(async (req, res, next) => {
 });
 
 export const createMenu = catchAsync(async (req, res, next) => {
-  const menu = await Menu.create(req.body);
+  const image = await uploadToCloudinary(file.buffer, 'gharstay/menu')
+  
+  const menu = await Menu.create({ ...req.body, images:image});
 
   res.status(201).json({
     status: "success",
@@ -53,17 +56,6 @@ export const createMenu = catchAsync(async (req, res, next) => {
   });
 });
 
-export const createManyMenu = catchAsync(async (req, res, next) => {
-  const menuData = req.body.menu;
-
-  const createdMenu = await Menu.insertMany(menuData);
-
-  res.status(201).json({
-    status: "success",
-    results: createdMenu.length,
-    data: createdMenu
-  });
-});
 
 export const updateMenu = catchAsync(async (req, res, next) => {
   const menu = await Menu.findByIdAndUpdate(req.params.id, req.body, {

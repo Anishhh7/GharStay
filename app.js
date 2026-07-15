@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
-import dotenv from 'dotenv'
-dotenv.config({ path: "./Config/config.env" });
+import dotenv from 'dotenv';
+dotenv.config({ path: './Config/config.env' });
 import globalErrorHandler from './controller/errorController.js';
 import AppError from './utils/appError.js';
 import userRouter from './Router/userRouter.js';
@@ -16,6 +16,8 @@ import faqRouter from './Router/faqRouter.js';
 import tesimonialRouter from './Router/tesimonialRouter.js';
 import reservationRouter from './Router/reservationRouter.js';
 import dashboardRouter from './Router/dashboardRouter.js';
+import newsLetterRouter from './Router/newLetterRouter.js';
+import websiteRouter from './Router/websiteRouter.js';
 
 const app = express();
 app.set('query parser', 'extended');
@@ -30,9 +32,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
-
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/rooms', roomRouter);
 app.use('/api/v1/packages', packageRouter);
@@ -45,15 +44,13 @@ app.use('/api/v1/faqs', faqRouter);
 app.use('/api/v1/testimonials', tesimonialRouter);
 app.use('/api/v1/reservation', reservationRouter);
 app.use('/api/v1/dashboards', dashboardRouter);
-
-
-
+app.use('/api/v1/subscribers', newsLetterRouter);
+app.use('/api/v1/website', websiteRouter);
 
 app.all('/{*path}', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
 
 app.use(globalErrorHandler);
-
 
 export default app;
