@@ -3,6 +3,9 @@ import AppError from '../utils/appError.js';
 import catchAsync from '../utils/catchAsync.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Room from '../models/roomModel.js';
+import sendEmail from '../utils/sendEmail.js';
+import reservationAdminEmail from '../utils/emailTemplate/adminEmail.js';
+import reservationCustomerEmail from '../utils/emailTemplate/customerEmail.js';
 
 const filterObj = (obj, ...allowFields) => {
   const newObj = {};
@@ -22,11 +25,11 @@ export const createReservation = catchAsync(async (req, res, next) => {
   if (!checkedRoom.availability) {
     return next(new AppError('this room is not available right now', 400));
   }
-  if (new Date(req.body.checkedIn) < new Date() ) {
+  if (new Date(req.body.checkedIn) < new Date()) {
     return next(new AppError('You cannot choose past Date', 400));
   }
 
-  if (new Date (req.body.checkedIn )>= new Date (req.body.checkedOut)) {
+  if (new Date(req.body.checkedIn) >= new Date(req.body.checkedOut)) {
     return next(new AppError('Please select a valid date', 400));
   }
 
@@ -47,6 +50,9 @@ export const createReservation = catchAsync(async (req, res, next) => {
   }
 
   const reservation = await Reservation.create(req.body);
+
+  await sendEmail(reservationCustomerEmail(reservation));
+  await sendEmail(reservationAdminEmail(reservation));
 
   res.status(201).json({
     status: 'Success',
@@ -82,7 +88,9 @@ export const getAllReservations = catchAsync(async (req, res, next) => {
 });
 
 export const getReservation = catchAsync(async (req, res, next) => {
-  const reservation = await Reservation.findById(req.params.id).populate('room');
+  const reservation = await Reservation.findById(req.params.id).populate(
+    'room'
+  );
 
   if (!reservation) {
     return next(new AppError('Invalid Id', 404));
