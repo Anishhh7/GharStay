@@ -69,5 +69,10 @@ export default {
   },
   newsletter: {
     readAll:['superAdmin']
+  },
+  aibot: {
+    readAll: ['superAdmin','admin'],
+    update: ['superAdmin', 'admin'],
+    create:['superAdmin', 'admin']
   }
 };

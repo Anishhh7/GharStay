@@ -18,6 +18,7 @@ import reservationRouter from './Router/reservationRouter.js';
 import dashboardRouter from './Router/dashboardRouter.js';
 import newsLetterRouter from './Router/newLetterRouter.js';
 import websiteRouter from './Router/websiteRouter.js';
+import chatbotRouter from './Router/chatbotRouter.js';
 
 const app = express();
 app.set('query parser', 'extended');
@@ -46,6 +47,7 @@ app.use('/api/v1/reservation', reservationRouter);
 app.use('/api/v1/dashboards', dashboardRouter);
 app.use('/api/v1/subscribers', newsLetterRouter);
 app.use('/api/v1/website', websiteRouter);
+app.use('/api/v1/assitant', chatbotRouter);
 
 app.all('/{*path}', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
