@@ -33,15 +33,12 @@ export const getDashboardStats = catchAsync(async (req, res, next) => {
     }),
     Contact.countDocuments({ contact: getAllContacts }),
   ]);
-  res.status(200).json({
-    status: 'success',
-    data: {
-      totalReservations,
-      pendingReservations,
-      totalRooms,
-      totalPackages,
-      pendingTestimonials,
-      totalContacts,
-    },
+  sendResponse(res, 200, {
+    totalReservations,
+    pendingReservations,
+    totalRooms,
+    totalPackages,
+    pendingTestimonials,
+    totalContacts,
   });
 });

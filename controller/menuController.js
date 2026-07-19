@@ -3,14 +3,14 @@ import AppError from './../utils/appError.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Menu from './../models/menuModel.js';
 import uploadToCloudinary from '../utils/uploadToCloudinary.js';
-
+import sendResponse from '../utils/sendResponse.js';
 
 export const getAllMenu = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Menu.find(), req.query)
     .filter()
     .search()
     .sort()
-    .pagination()
+    .pagination();
 
   const menu = await features.query;
 
@@ -18,13 +18,11 @@ export const getAllMenu = catchAsync(async (req, res, next) => {
 
   const totalPages = Math.ceil(total / features.limit);
 
-  res.status(200).json({
-    status: "Success",
+  sendResponse(res, 200, menu, undefined, {
     results: menu.length,
     total,
-    page:features.page,
+    page: features.page,
     totalPages,
-    data: menu
   });
 });
 
@@ -32,60 +30,41 @@ export const getMenu = catchAsync(async (req, res, next) => {
   const menu = await Menu.findById(req.params.id);
 
   if (!menu) {
-    return next(new AppError("No menu found with that ID", 404));
+    return next(new AppError('No menu found with that ID', 404));
   }
 
-  res.status(200).json({
-    status: "Success",
-    data: {
-      menu
-    }
-  });
+  sendResponse(res, 200, menu);
 });
 
 export const createMenu = catchAsync(async (req, res, next) => {
-  const image = await uploadToCloudinary(file.buffer, 'gharstay/menu')
-  
-  const menu = await Menu.create({ ...req.body, images:image});
+  const image = req.body
+    ? await uploadToCloudinary(file.buffer, 'gharstay/menu')
+    : undefined;
 
-  res.status(201).json({
-    status: "success",
-    data: {
-      menu
-    }
-  });
+  const menu = await Menu.create({ ...req.body, images: image });
+
+  sendResponse(res, 201, menu, 'Menu created successfully');
 });
-
 
 export const updateMenu = catchAsync(async (req, res, next) => {
   const menu = await Menu.findByIdAndUpdate(req.params.id, req.body, {
     returnDocument: 'after',
-    runValidators: true
+    runValidators: true,
   });
 
   if (!menu) {
-    return next(new AppError("No menu found with that ID", 404));
+    return next(new AppError('No menu found with that ID', 404));
   }
 
-  res.status(200).json({
-    status: "Success",
-    data: {
-      menu
-    },
-    message: "Succesfully Updated"
-  });
+  sendResponse(res, 200, menu, 'Menu updated successfully');
 });
 
-export const deleteMenu= catchAsync(async (req, res, next) => {
+export const deleteMenu = catchAsync(async (req, res, next) => {
   const menu = await Menu.findByIdAndDelete(req.params.id);
 
   if (!menu) {
-    return next(new AppError("No menu found with that ID", 404));
+    return next(new AppError('No menu found with that ID', 404));
   }
 
-  res.status(204).json({
-    status: "Success",
-    data: null,
-    message: "Deleted Succesfuly"
-  });
+  sendResponse(res, 204, null, 'Menu deleted successfully');
 });

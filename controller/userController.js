@@ -1,6 +1,7 @@
 import catchAsync from './../utils/catchAsync.js';
 import AppError from './../utils/appError.js';
 import User from '../models/userModel.js';
+import sendResponse from '../utils/sendResponse.js';
 
 const filterObj = (obj, ...allowFields) => {
   const newObj = {};
@@ -13,18 +14,16 @@ const filterObj = (obj, ...allowFields) => {
 export const getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
 
-  res.status(200).json({
-    status: 'Success',
+  sendResponse(res, 200, users, undefined, {
     results: users.length,
-    data: users,
   });
 });
 
 export const createUser = catchAsync(async (req, res, next) => {
   const { name, email, password, role } = req.body;
 
-  if (!['employee', 'admin'].includes(req.body.role)) {
-    return next(new AppError('you are not authorized', 401));
+  if (!['staff', 'admin'].includes(role)) {
+    return next(new AppError('Permission denied', 401));
   }
 
   const user = await User.create({
@@ -34,24 +33,31 @@ export const createUser = catchAsync(async (req, res, next) => {
     role,
   });
 
-  res.status(200).json({
-    status: 'Success',
-    data: user,
-    message: 'User created sucessfully',
-  });
+  sendResponse(res, 201, user, 'User created sucessfully');
 });
 
 export const createManyUsers = catchAsync(async (req, res, next) => {
   const usersData = req.body.users;
-  const createdUsers = await Promise.all(
-    usersData.map((userData) => User.create(userData))
+
+  const invalidUser = usersData.find(
+    (u) => !['staff', 'admin'].includes(u.role)
+  );
+  if (invalidUser) {
+    return next(new AppError('Invalid role in one or more users', 400));
+  }
+
+  const manyUsers = await Promise.all(
+    usersData.map((userData) =>
+      User.create({
+        name: userData.name,
+        email: userDate.email,
+        password: userData.password,
+        role: userData.role,
+      })
+    )
   );
 
-  res.status(201).json({
-    status: 'success',
-    results: createdUsers.length,
-    data: createdUsers,
-  });
+  sendResponse(res, 201, manyUsers, 'Bulk users created successfully');
 });
 
 export const updateUser = catchAsync(async (req, res, next) => {
@@ -61,8 +67,8 @@ export const updateUser = catchAsync(async (req, res, next) => {
 
   const filterBody = filterObj(req.body, 'name', 'email', 'role', 'active');
 
-  const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
-   returnDocument: 'after',
+  const updateUser = await User.findByIdAndUpdate(req.params.id, filterBody, {
+    returnDocument: 'after',
     runValidators: true,
   });
 
@@ -70,11 +76,15 @@ export const updateUser = catchAsync(async (req, res, next) => {
     return next(new AppError('No user found with that ID', 404));
   }
 
-  res.status(200).json({
-    status: 'Success',
-    data: {
-      user: updateUser,
-    },
-    message: 'updated sucessfully',
-  });
+  sendResponse(res, 200, updateUser, 'User updated successfully');
+});
+
+export const deleteUser = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+
+  if (!user) {
+    return next(new AppError('No user found with that ID', 404));
+  }
+
+  sendResponse(res, 204, null, 'User deleted successfully');
 });

@@ -2,6 +2,7 @@ import Blog from '../models/blogModel.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import AppError from '../utils/appError.js';
 import catchAsync from '../utils/catchAsync.js';
+import sendResponse from '../utils/sendResponse.js';
 
 export const getAllBlogs = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Blog.find(), req.query)
@@ -15,38 +16,29 @@ export const getAllBlogs = catchAsync(async (req, res, next) => {
   const total = await Blog.countDocuments(features.filterConditions);
   const totalPages = Math.ceil(total / features.limit);
 
-  res.status(200).json({
-    status: 'Success',
+  sendResponse(res, 200, blog, undefined, {
     results: blog.length,
     total,
-    page:features.page,
+    page: features.page,
     totalPages,
-    data: blog,
   });
 });
 
 export const getBlog = catchAsync(async (req, res, next) => {
   const blog = await Blog.findById(req.params.id);
 
-  res.status(200).json({
-    status: 'Success',
-    data: blog,
-  });
+  sendResponse(res, 200, blog);
 });
 
 export const createBlog = catchAsync(async (req, res, next) => {
   const blog = await Blog.create(req.body);
 
-  res.status(201).json({
-    status: 'Success',
-    data: blog,
-    message: 'Successfully Added',
-  });
+  sendResponse(res, 201, blog, 'Succesfully created a blog');
 });
 
 export const updateBlog = catchAsync(async (req, res, next) => {
   const blog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
-    returnDocument:'after',
+    returnDocument: 'after',
     runValidators: true,
   });
 
@@ -54,11 +46,7 @@ export const updateBlog = catchAsync(async (req, res, next) => {
     return next(new AppError('Unable to find ', 404));
   }
 
-  res.status(201).json({
-    status: 'Success',
-    data: blog,
-    message: 'Update Sucessfully',
-  });
+  sendResponse(res, 200, blog, 'updated successfully');
 });
 
 export const deleteBlog = catchAsync(async (req, res, next) => {
@@ -68,9 +56,5 @@ export const deleteBlog = catchAsync(async (req, res, next) => {
     return next(new AppError('Unable to find', 404));
   }
 
-  res.status(204).json({
-    status: 'Success',
-    message: 'Deleted Successfully',
-    data: null,
-  });
+  sendResponse(res, 204, null, 'Deleted successfully');
 });

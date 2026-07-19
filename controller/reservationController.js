@@ -6,6 +6,7 @@ import Room from '../models/roomModel.js';
 import sendEmail from '../utils/sendEmail.js';
 import reservationAdminEmail from '../utils/emailTemplate/adminEmail.js';
 import reservationCustomerEmail from '../utils/emailTemplate/customerEmail.js';
+import sendResponse from '../utils/sendResponse.js';
 
 const filterObj = (obj, ...allowFields) => {
   const newObj = {};
@@ -76,14 +77,11 @@ export const getAllReservations = catchAsync(async (req, res, next) => {
   const total = await Reservation.countDocuments(features.filterCondition);
   const totalPages = Math.ceil(total / features.limit);
 
-  res.status(200).json({
-    status: 'Success',
-    results: {
-      total,
-      totalPages,
-      page: reservation.length,
-    },
-    data: reservation,
+  sendResponse(res, 200, reservation, undefined, {
+    results: reservation.length,
+    total,
+    totalPages,
+    page: features.length,
   });
 });
 
@@ -93,13 +91,10 @@ export const getReservation = catchAsync(async (req, res, next) => {
   );
 
   if (!reservation) {
-    return next(new AppError('Invalid Id', 404));
+    return next(new AppError('No reservation found with that Id', 404));
   }
 
-  res.status(200).json({
-    status: 'Success',
-    data: reservation,
-  });
+  sendResponse(res, 200, reservation);
 });
 
 export const updateStatusReservation = catchAsync(async (req, res, next) => {
@@ -122,14 +117,10 @@ export const updateStatusReservation = catchAsync(async (req, res, next) => {
   );
 
   if (!reservation) {
-    return next(new AppError('unable to find', 404));
+    return next(new AppError('No reservation found with that Id', 404));
   }
 
-  res.status(200).json({
-    status: 'Success',
-    data: reservation,
-    message: 'Updated successfully',
-  });
+  sendResponse(res, 200, reservation, 'Reservation Status updated successfully')
 });
 
 export const updateReservationDetails = catchAsync(async (req, res, next) => {
@@ -143,26 +134,21 @@ export const updateReservationDetails = catchAsync(async (req, res, next) => {
   ).populate('room');
 
   if (!reservation) {
-    return next(new AppError('Unable to find', 404));
+    return next(new AppError('No reservation found with that Id', 404));
   }
 
-  res.status(200).json({
-    status: 'Success',
-    data: reservation,
-    message: 'updated successfully',
-  });
+
+  sendResponse(res, 200, reservation, 'Reservation updated successfully')
 });
 
 export const deleteReservation = catchAsync(async (req, res, next) => {
   const reservation = await Reservation.findByIdAndDelete(req.params.id);
 
-  if (!reservation) {
-    return next(new AppError('unable to find'), 404);
+   if (!reservation) {
+    return next(new AppError('No reservation found with that Id', 404));
   }
 
-  res.status(204).json({
-    status: 'Success',
-    data: null,
-    message: 'Deleted successfully',
-  });
+
+  sendResponse(res, 204, null, 'Reservation Deleted successfully')
+  
 });

@@ -1,26 +1,20 @@
 import Contact from "../models/contactModel.js";
+import sendResponse from "../utils/sendResponse.js";
 import AppError from "./../utils/appError.js";
 import catchAsync from "./../utils/catchAsync.js";
 
 export const getAllContacts = catchAsync(async (req, res, next) => {
   const contact = await Contact.find().sort("-createdAt");
 
-  res.status(200).json({
-    status: "Success",
-    results: contact.length,
-    data: contact
-  });
+  sendResponse(res, 200, contact, undefined, {
+   results: contact.length,
+})
 });
 
 export const createContact = catchAsync(async (req, res, next) => {
   const contact = await Contact.create(req.body);
 
-  res.status(201).json({
-    status: "success",
-    data: {
-      contact
-    }
-  });
+sendResponse(res, 200, contact)
 });
 
 export const deleteContact = catchAsync(async (req, res, next) => {
@@ -30,8 +24,5 @@ export const deleteContact = catchAsync(async (req, res, next) => {
     return next(new AppError("No inquiry found with that ID", 404));
   }
 
-  res.status(204).json({
-    status: "success",
-    data: null
-  });
+ sendResponse(res, 204, null, 'Contact deleted successfully')
 });

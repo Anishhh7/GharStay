@@ -1,25 +1,20 @@
 import FAQ from "./../models/FaqModel.js";
 import AppError from "../utils/appError.js";
 import catchAsync from "../utils/catchAsync.js";
+import sendResponse from "../utils/sendResponse.js";
 
 export const getAllFaqs = catchAsync(async (req, res, next) => {
   const faq = await FAQ.find().sort("-createdAt");
 
-  res.status(200).json({
-    status: "Success",
-    total: faq.length,
-    data: faq
-  });
+  sendResponse(res, 200, faq, undefined, {
+        total: faq.length,
+  })
 });
 
 export const createFaq = catchAsync(async (req, res, next) => {
   const faq = await FAQ.create(req.body);
 
-  res.status(201).json({
-    status: "Success",
-    data: faq,
-    message: "Created Successfully"
-  });
+ sendResponse(res, 201, faq, 'FAQ created successfully')
 });
 
 export const updateFaq = catchAsync(async (req, res, next) => {
@@ -29,26 +24,18 @@ export const updateFaq = catchAsync(async (req, res, next) => {
   });
 
   if (!faq) {
-    return next(new AppError("Unable to find", 404));
+    return next(new AppError("No FAQ found with that ID", 404));
   }
 
-  res.status(200).json({
-    status: "Success",
-    data: faq,
-    message: "Updated Successfully"
-  });
+sendResponse(res, 200, faq, 'FAQ updated successfully')
 });
 
 export const deleteFaq = catchAsync(async (req, res, next) => {
   const faq = await FAQ.findByIdAndDelete(req.params.id);
 
   if (!faq) {
-    return next(new AppError("Unable to find", 404));
+    return next(new AppError("No FAQ found with that ID", 404));
   }
 
-  res.status(204).json({
-    status: "Success",
-    data: null,
-    message: "Deleted Successfully"
-  });
+  sendResponse(res, 204, null, 'FAQ deleted successfully')
 });
