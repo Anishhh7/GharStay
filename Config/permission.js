@@ -73,6 +73,7 @@ export default {
   aibot: {
     readAll: ['superAdmin','admin'],
     update: ['superAdmin', 'admin'],
-    create:['superAdmin', 'admin']
+    create:['superAdmin', 'admin'],
+    delete:['superAdmin', 'admin']
   }
 };
