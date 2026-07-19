@@ -5,7 +5,7 @@ import * as AiChatController from '../controller/aiChatController.js';
 
 const router = express.Router();
 
-router.route('/bot').post(AiChatController.askAssitant);
+router.route('/').post(AiChatController.askAssitant);
 
 router.use(AuthController.protect);
 
@@ -25,7 +25,10 @@ router
   .patch(
     AuthController.restrictTo(...permission.aibot.update),
     AiChatController.updateChat
+  )
+  .delete(
+    AuthController.restrictTo(...permission.aibot.delete),
+    AiChatController.deleteChat
   );
-
 
 export default router;
