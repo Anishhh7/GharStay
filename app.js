@@ -77,7 +77,7 @@ app.get('/', (req, res) => {
 });
 
 // Your existing unhandled route catch-all (triggers your 404 response)
-app.all('*', (req, res, next) => {
+app.all('/{*path}', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
