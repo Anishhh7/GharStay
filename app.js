@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-dotenv.config({ path: './Config/config.env', quiet:true});
+dotenv.config({ path: './Config/config.env', quiet: true });
 import cors from 'cors';
 import globalErrorHandler from './controller/errorController.js';
 import AppError from './utils/appError.js';
@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// Dynamic CORS configuration for Vercel & local development
 const allowedOrigins = [
   "http://localhost:5173",
   "https://ghar-stay-bi34qyiw3-anishhh7s-projects.vercel.app",
@@ -38,7 +39,11 @@ const allowedOrigins = [
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin || 
+        allowedOrigins.includes(origin) || 
+        origin.endsWith('.vercel.app') // Allows all Vercel previews/production URLs
+      ) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
@@ -48,10 +53,7 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  next();
-});
-
+// API Routes
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/rooms', roomRouter);
 app.use('/api/v1/packages', packageRouter);
@@ -68,7 +70,7 @@ app.use('/api/v1/subscribers', newsLetterRouter);
 app.use('/api/v1/website', websiteRouter);
 app.use('/api/v1/assitant', chatbotRouter);
 
-// Default root route
+// Default Root Route
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -76,18 +78,13 @@ app.get('/', (req, res) => {
   });
 });
 
-// Your existing unhandled route catch-all (triggers your 404 response)
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 app.all('/{*path}', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-app.all('/{*path}', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
-});
-
-
-app.get('/favicon.ico', (req, res) => res.status(204).end());
-
+// Global Error Handler
 app.use(globalErrorHandler);
 
 export default app;
