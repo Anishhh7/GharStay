@@ -85,6 +85,9 @@ app.all('/{*path}', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
 
+
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 app.use(globalErrorHandler);
 
 export default app;
