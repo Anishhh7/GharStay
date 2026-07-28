@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 dotenv.config({ path: './Config/config.env' });
+import cors from 'cors';
 import globalErrorHandler from './controller/errorController.js';
 import AppError from './utils/appError.js';
 import userRouter from './Router/userRouter.js';
@@ -28,6 +29,13 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Vite
+    credentials: true,
+  })
+);
 
 app.use((req, res, next) => {
   next();

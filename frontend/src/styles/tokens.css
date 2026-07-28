@@ -1,0 +1,48 @@
+:root {
+  /* ---- Color: grounded in forest / earth / gold ---- */
+  --color-forest-deep: #1B3026;
+  --color-forest: #2C4A3B;
+  --color-sage: #8FA593;
+  --color-earth: #6B4A34;
+  --color-earth-light: #A67C58;
+  --color-beige: #F3ECE0;
+  --color-cream: #FAF6EE;
+  --color-gold: #C89B4A;
+  --color-gold-soft: #E4C888;
+  --color-charcoal: #26241F;
+  --color-white: #FFFFFF;
+
+  --color-bg: var(--color-cream);
+  --color-bg-alt: var(--color-beige);
+  --color-text: var(--color-charcoal);
+  --color-text-muted: #6B6558;
+  --color-border: #E2D8C4;
+
+  /* ---- Type ---- */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Manrope', -apple-system, sans-serif;
+
+  --fs-eyebrow: 0.75rem;
+  --fs-body: 1rem;
+  --fs-body-lg: 1.125rem;
+  --fs-h5: 1.375rem;
+  --fs-h4: 1.75rem;
+  --fs-h3: 2.25rem;
+  --fs-h2: 3rem;
+  --fs-h1: clamp(2.75rem, 5vw, 4.75rem);
+
+  /* ---- Spacing (8pt-ish scale) ---- */
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2rem;
+  --sp-5: 3rem;
+  --sp-6: 4.5rem;
+  --sp-7: 6.5rem;
+  --sp-8: 9rem;
+
+  --content-max: 1280px;
+  --content-narrow: 760px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

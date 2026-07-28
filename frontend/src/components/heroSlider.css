@@ -1,0 +1,79 @@
+.hero-slider {
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  background: var(--color-forest-deep);
+}
+
+.hero-slider__slide {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.4s var(--ease-out), transform 8s linear;
+}
+.hero-slider__slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-slider__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(15,26,20,0.45) 0%, rgba(15,26,20,0.15) 35%, rgba(15,26,20,0.75) 100%);
+}
+
+.hero-slider__content {
+  position: absolute;
+  left: 0; right: 0; bottom: 8.5rem;
+  color: var(--color-cream);
+}
+
+.hero-slider__copy { display: none; max-width: 640px; }
+.hero-slider__copy.is-active { display: block; animation: hero-rise 0.9s var(--ease-out); }
+.hero-slider__copy h1 { color: var(--color-cream); margin: 0.6rem 0 1rem; }
+.hero-slider__text { font-size: var(--fs-body-lg); color: rgba(250,246,238,0.88); max-width: 46ch; }
+.hero-slider__actions { display: flex; gap: 1rem; margin-top: var(--sp-3); flex-wrap: wrap; }
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-slider__controls {
+  position: absolute;
+  left: 0; right: 0; bottom: var(--sp-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-slider__dots { display: flex; gap: 0.6rem; }
+.hero-slider__dots button {
+  width: 30px; height: 3px; border: none; background: rgba(250,246,238,0.35);
+  padding: 0; transition: background 0.3s;
+}
+.hero-slider__dots button.is-active { background: var(--color-gold); }
+
+.hero-slider__scroll {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(250,246,238,0.7);
+}
+.hero-slider__scroll span {
+  width: 1px; height: 26px; background: rgba(250,246,238,0.5);
+  position: relative; overflow: hidden;
+}
+.hero-slider__scroll span::after {
+  content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%;
+  background: var(--color-gold);
+  animation: scroll-cue 1.8s ease infinite;
+}
+@keyframes scroll-cue { to { top: 100%; } }
+
+@media (max-width: 700px) {
+  .hero-slider__content { bottom: 6rem; }
+  .hero-slider__controls { bottom: var(--sp-2); }
+  .hero-slider__scroll { display: none; }
+}

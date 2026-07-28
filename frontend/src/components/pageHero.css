@@ -1,0 +1,13 @@
+.page-hero {
+  position: relative;
+  height: 56vh;
+  min-height: 380px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.page-hero__image { position: absolute; inset: 0; }
+.page-hero__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,26,20,0.35), rgba(15,26,20,0.8)); }
+.page-hero__content { position: relative; color: var(--color-cream); padding-bottom: var(--sp-5); }
+.page-hero__content h1 { color: var(--color-cream); margin: 0.5rem 0 0.75rem; font-size: clamp(2.25rem, 4.5vw, 3.5rem); }
+.page-hero__content p { max-width: 56ch; color: rgba(250,246,238,0.88); font-size: var(--fs-body-lg); }
