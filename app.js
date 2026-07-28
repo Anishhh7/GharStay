@@ -68,6 +68,19 @@ app.use('/api/v1/subscribers', newsLetterRouter);
 app.use('/api/v1/website', websiteRouter);
 app.use('/api/v1/assitant', chatbotRouter);
 
+// Default root route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'GharStay API is live and running!'
+  });
+});
+
+// Your existing unhandled route catch-all (triggers your 404 response)
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
 app.all('/{*path}', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
