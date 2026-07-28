@@ -1,6 +1,4 @@
-import ai from '../config/gemini.js';
-
-console.log('askGemini is running');
+import ai from '../Config/gemini.js';
  
 const askGemini = async (prompt) => {
   const response = await ai.models.generateContent({

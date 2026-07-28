@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-dotenv.config({ path: './Config/config.env' });
+dotenv.config({ path: './Config/config.env', quite:true});
 import cors from 'cors';
 import globalErrorHandler from './controller/errorController.js';
 import AppError from './utils/appError.js';
@@ -30,9 +30,20 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ghar-stay-bi34qyiw3-anishhh7s-projects.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // Vite
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );

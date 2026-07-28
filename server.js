@@ -7,8 +7,8 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-dotenv.config({ path: "./Config/config.env" });
-dotenv.config({ path: "./Config/cloudinary.env" });
+dotenv.config({ path: "./Config/config.env" , quite:true });
+dotenv.config({ path: "./Config/cloudinary.env" , quite:true });
 
 import mongoose from "mongoose";
 import { globalTimestampFormatter } from "./utils/mongoosePlugins.js";
