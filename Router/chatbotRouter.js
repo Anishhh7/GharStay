@@ -30,6 +30,7 @@ router
   .delete(
     AuthController.restrictTo(...permission.aibot.delete),
     AiChatController.deleteChat
-  );
+);
+  
 
 export default router;
