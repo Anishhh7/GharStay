@@ -5,12 +5,13 @@ import * as AiChatController from '../controller/aiChatController.js';
 
 const router = express.Router();
 
-router.route('/').post(AiChatController.askAssitant);
+
+router.post('/', AiChatController.askAssitant);
 
 router.use(AuthController.protect);
 
 router
-  .route('/')
+  .route(['/', '/entries'])
   .get(
     AuthController.restrictTo(...permission.aibot.readAll),
     AiChatController.getAllChat
@@ -21,7 +22,7 @@ router
   );
 
 router
-  .route('/:id')
+  .route(['/:id', '/entries/:id'])
   .patch(
     AuthController.restrictTo(...permission.aibot.update),
     AiChatController.updateChat

@@ -5,6 +5,7 @@ import Room from '../models/roomModel.js';
 import Package from '../models/pacakageModel.js';
 import Testimonial from '../models/testimonialsModel.js';
 import Contact from '../models/contactModel.js';
+import sendResponse from '../utils/sendResponse.js';
 import { getAllRooms } from './roomController.js';
 import { getAllReservations } from './reservationController.js';
 import { getAllPackages } from './packageController.js';

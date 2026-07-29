@@ -1,0 +1,110 @@
+.chat-widget {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 300;
+}
+
+.chat-widget__toggle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-forest);
+  color: var(--color-cream);
+  font-size: 1.4rem;
+  box-shadow: 0 8px 24px rgba(27,48,38,0.35);
+  transition: background 0.25s, transform 0.25s;
+}
+.chat-widget__toggle:hover { background: var(--color-forest-deep); transform: translateY(-2px); }
+
+.chat-widget__panel {
+  position: absolute;
+  bottom: 68px;
+  right: 0;
+  width: min(340px, calc(100vw - 3rem));
+  height: 440px;
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 16px 48px rgba(27,48,38,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-widget__header {
+  background: var(--color-forest-deep);
+  color: var(--color-cream);
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+.chat-widget__header button {
+  background: none; border: none; color: var(--color-cream);
+  font-size: 1.3rem; line-height: 1; padding: 0;
+}
+
+.chat-widget__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.chat-widget__bubble {
+  max-width: 85%;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  border-radius: 2px;
+}
+.chat-widget__bubble--assistant {
+  align-self: flex-start;
+  background: var(--color-beige);
+  color: var(--color-text);
+}
+.chat-widget__bubble--user {
+  align-self: flex-end;
+  background: var(--color-forest);
+  color: var(--color-cream);
+}
+.chat-widget__typing { color: var(--color-text-muted); font-style: italic; }
+
+.chat-widget__error {
+  padding: 0 1rem 0.5rem;
+  font-size: 0.78rem;
+  color: #A33B2E;
+}
+
+.chat-widget__input {
+  display: flex;
+  border-top: 1px solid var(--color-border);
+}
+.chat-widget__input input {
+  flex: 1;
+  border: none;
+  padding: 0.8rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  background: var(--color-cream);
+}
+.chat-widget__input input:focus { outline: none; }
+.chat-widget__input button {
+  background: var(--color-gold);
+  color: var(--color-forest-deep);
+  border: none;
+  padding: 0 1.1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.chat-widget__input button:disabled { opacity: 0.5; }
+
+@media (max-width: 480px) {
+  .chat-widget { right: 1rem; bottom: 1rem; }
+  .chat-widget__panel { width: calc(100vw - 2rem); }
+}
