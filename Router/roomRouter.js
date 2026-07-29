@@ -15,7 +15,7 @@ router
   .route('/')
   .post(
     authController.restrictTo(...permission.rooms.create),
-    upload.array('images', 5),
+    upload.single('images', 5),
     RoomController.createRoom
   );
 
