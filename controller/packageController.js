@@ -45,7 +45,7 @@ export const getPackage = catchAsync(async (req, res, next) => {
 export const createPackage = catchAsync(async (req, res, next) => {
   const image =
     req.file && req.file.length > 0
-      ? await uploadToCloudinary(file.buffer, 'gharstay/packages')
+      ? await uploadToCloudinary(req.file.buffer, 'gharstay/packages')
       : [];
 
   const pkg = await Package.create({ ...req.body, images: image });

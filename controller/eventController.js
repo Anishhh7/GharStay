@@ -32,7 +32,7 @@ export const getEvent = catchAsync(async (req, res, next) => {
 });
 
 export const createEvent = catchAsync(async (req, res, next) => {
-  const image = await uploadToCloudinary(file.buffer, 'gharstay/events');
+  const image = await uploadToCloudinary(req.file.buffer, 'gharstay/events');
 
   const event = await Events.create({ ...req.body, images: image });
 

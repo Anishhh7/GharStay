@@ -38,7 +38,7 @@ export const getMenu = catchAsync(async (req, res, next) => {
 
 export const createMenu = catchAsync(async (req, res, next) => {
   const image = req.body
-    ? await uploadToCloudinary(file.buffer, 'gharstay/menu')
+    ? await uploadToCloudinary(req.file.buffer, 'gharstay/menu')
     : undefined;
 
   const menu = await Menu.create({ ...req.body, images: image });
