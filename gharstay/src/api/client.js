@@ -181,5 +181,45 @@ export async function uploadFile(file, { path = '/upload', fieldName = 'file' } 
 
   return url;
 }
+export async function submitMultipart(path, { method = 'POST', fields = {}, files = {} } = {}) {
+  const formData = new FormData();
+  Object.entries(fields).forEach(([k, v]) => {
+    if (v === undefined || v === null) return;
+    if (typeof v === 'boolean') formData.append(k, String(v));
+    else if (Array.isArray(v)) v.forEach((item) => formData.append(k, item));
+    else formData.append(k, v);
+  });
+  Object.entries(files).forEach(([fieldName, file]) => {
+    if (file) formData.append(fieldName, file);
+  });
+
+  const headers = {};
+  const token = getToken();
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  let res;
+  try {
+    res = await fetch(`${BASE_URL}${path}`, { method, headers, body: formData });
+  } catch {
+    throw new ApiError('Network error — is the API running at ' + BASE_URL + '?', 0, null);
+  }
+
+  const text = await res.text();
+  let data = null;
+  if (text) {
+    try { data = JSON.parse(text); } catch { data = text; }
+  }
+
+  if (!res.ok) {
+    if (res.status === 401) {
+      setToken(null);
+      localStorage.removeItem('gharstay_user');
+    }
+    const message = (data && (data.message || data.error)) || `Request failed (${res.status})`;
+    throw new ApiError(message, res.status, data);
+  }
+
+  return data;
+}
 
 export { ApiError, BASE_URL };

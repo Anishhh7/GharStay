@@ -1,4 +1,4 @@
-import { api } from './client';
+import { api, submitMultipart } from './client';
 
 /**
  * Factory for a standard CRUD resource: GET list, GET one, POST, PUT, DELETE.
@@ -11,6 +11,7 @@ function crud(path) {
     list: (params) => api.get(path + toQuery(params)),
     get: (id) => api.get(`${path}/${id}`),
     create: (payload) => api.post(path, payload),
+     createMultipart: (fields, files) => submitMultipart(path, { method: 'POST', fields, files }),
     update: (id, payload) => api.put(`${path}/${id}`, payload),
     remove: (id) => api.del(`${path}/${id}`),
   };

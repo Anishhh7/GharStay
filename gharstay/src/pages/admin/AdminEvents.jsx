@@ -2,7 +2,7 @@ import ResourceManager from '../../components/ResourceManager';
 import { events } from '../../api/resources';
 
 const fields = [
-  { key: 'images', label: 'Photo', type: 'image' },
+  { key: 'images', label: 'Photo', type: 'image-file', uploadFieldName: 'image' },
   { key: 'name', label: 'Event name', required: true },
   { key: 'date', label: 'Date', type: 'date', required: true },
   { key: 'category', label: 'Category', type: 'select', options: ['Weddings', 'Corporate Events', 'Birthday', 'Family Gatherings', 'Cultural Programs'], required: true },

@@ -2,7 +2,7 @@ import ResourceManager from '../../components/ResourceManager';
 import { packages } from '../../api/resources';
 
 const fields = [
-  { key: 'image', label: 'Photo', type: 'image' },
+  { key: 'image', label: 'Photo', type: 'image-file', uploadFieldName: 'image' },
   { key: 'name', label: 'Package name', required: true },
   { key: 'duration', label: 'Duration', required: true },
   { key: 'price', label: 'Price', type: 'number', required: true },

@@ -2,7 +2,7 @@ import ResourceManager from '../../components/ResourceManager';
 import { menu } from '../../api/resources';
 
 const fields = [
-  { key: 'images', label: 'Photo', type: 'image' },
+  { key: 'images', label: 'Photo', type: 'image-file', uploadFieldName: 'image' },
   { key: 'name', label: 'Item name', required: true },
   { key: 'category', label: 'Category', type: 'select', options: ['Nepali Cuisine', 'Local Special', 'Beverages', 'Dessserts', 'Snacks', 'Breakfast'] },
   { key: 'price', label: 'Price', type: 'number', required: true },
