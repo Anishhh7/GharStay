@@ -24,7 +24,7 @@ export const getDashboardStats = catchAsync(async (req, res, next) => {
     Reservation.countDocuments({ reservation: getAllReservations }),
     Reservation.countDocuments({
       reservation: getAllReservations,
-      status: 'Pending',
+      status: 'pending',
     }),
     Room.countDocuments({ room: getAllRooms }),
     Package.countDocuments({ pkgs: getAllPackages }),

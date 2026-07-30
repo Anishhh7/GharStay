@@ -17,6 +17,10 @@ const filterObj = (obj, ...allowFields) => {
 };
 
 export const createReservation = catchAsync(async (req, res, next) => {
+  if (!req.body.room) {
+    return next(new AppError('Please provide a valid Room ID', 400));
+  }
+
   const checkedRoom = await Room.findById(req.body.room);
 
   if (!checkedRoom) {
@@ -26,19 +30,29 @@ export const createReservation = catchAsync(async (req, res, next) => {
   if (!checkedRoom.availability) {
     return next(new AppError('this room is not available right now', 400));
   }
-  if (new Date(req.body.checkedIn) < new Date()) {
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const checkInDate = new Date(req.body.checkedIn);
+  const checkOutDate = new Date(req.body.checkedOut);
+
+  checkInDate.setHours(0, 0, 0, 0);
+  checkOutDate.setHours(0, 0, 0, 0);
+
+  if (checkInDate < today) {
     return next(new AppError('You cannot choose past Date', 400));
   }
 
-  if (new Date(req.body.checkedIn) >= new Date(req.body.checkedOut)) {
+  if (checkInDate >= checkOutDate) {
     return next(new AppError('Please select a valid date', 400));
   }
 
   const reserveChecking = await Reservation.find({
     room: req.body.room,
-    status: { $ne: 'Cancelled' },
-    checkedIn: { $lt: req.body.checkedOut },
-    checkedOut: { $gt: req.body.checkedIn },
+    status: { $ne: 'cancelled' },
+    checkedIn: { $lt: req.body.checkedOutDate },
+    checkedOut: { $gt: req.body.checkedInDate },
   });
 
   if (reserveChecking.length > 0) {
@@ -49,7 +63,9 @@ export const createReservation = catchAsync(async (req, res, next) => {
       )
     );
   }
-
+  if (req.body.status) {
+    req.body.status = req.body.status.toLowerCase().trim();
+  }
   const reservation = await Reservation.create(req.body);
 
   await sendEmail(reservationCustomerEmail(reservation));
@@ -98,9 +114,13 @@ export const getReservation = catchAsync(async (req, res, next) => {
 });
 
 export const updateStatusReservation = catchAsync(async (req, res, next) => {
+  if (req.body.status) {
+    req.body.status = req.body.status.toLowerCase().trim();
+  }
+
   if (
     req.body.status &&
-    !['Pending', 'Approved', 'Completed', 'Cancelled'].includes(req.body.status)
+    !['pending', 'approved', 'completed', 'cancelled'].includes(req.body.status)
   ) {
     return next(new AppError('Invalid status', 400));
   }
@@ -120,7 +140,12 @@ export const updateStatusReservation = catchAsync(async (req, res, next) => {
     return next(new AppError('No reservation found with that Id', 404));
   }
 
-  sendResponse(res, 200, reservation, 'Reservation Status updated successfully')
+  sendResponse(
+    res,
+    200,
+    reservation,
+    'Reservation Status updated successfully'
+  );
 });
 
 export const updateReservationDetails = catchAsync(async (req, res, next) => {
@@ -137,18 +162,15 @@ export const updateReservationDetails = catchAsync(async (req, res, next) => {
     return next(new AppError('No reservation found with that Id', 404));
   }
 
-
-  sendResponse(res, 200, reservation, 'Reservation updated successfully')
+  sendResponse(res, 200, reservation, 'Reservation updated successfully');
 });
 
 export const deleteReservation = catchAsync(async (req, res, next) => {
   const reservation = await Reservation.findByIdAndDelete(req.params.id);
 
-   if (!reservation) {
+  if (!reservation) {
     return next(new AppError('No reservation found with that Id', 404));
   }
 
-
-  sendResponse(res, 204, null, 'Reservation Deleted successfully')
-  
+  sendResponse(res, 204, null, 'Reservation Deleted successfully');
 });
