@@ -54,7 +54,7 @@ export default function Gallery() {
               <div className="card-grid">
                 {filtered.map((item, i) => (
                   <div key={item.id || item._id || i} className="plain-card__image" style={{ aspectRatio: '4/5' }}>
-                    <img src={item.imageUrl || item.url || item.image} alt={item.caption || item.title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={item.url} alt={item.title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                 ))}
               </div>

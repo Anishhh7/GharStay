@@ -31,12 +31,17 @@ export default function Rooms() {
               {list.map((room, i) => (
                 <Link to={`/rooms/${room.id || room._id}`} key={room.id || room._id || i} className="plain-card">
                   <div className="plain-card__image">
-                    <Photo id={IMG_CYCLE[i % IMG_CYCLE.length]} alt={room.name} />
+                    {room.images?.[0] ? (
+                      <img src={room.images[0]} alt={room.roomName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <Photo id={IMG_CYCLE[i % IMG_CYCLE.length]} alt={room.roomName} />
+                    )}
                   </div>
-                  <h5>{room.name || 'Room'}</h5>
+                  <h5>{room.roomName || 'Room'}</h5>
                   <div className="plain-card__meta">
-                    {room.price ? `From $${room.price} / night` : 'Rates on request'}
-                    {room.capacity ? ` · Sleeps ${room.capacity}` : ''}
+                    {room.roomType ? `${room.roomType} · ` : ''}
+                    {room.price ? `$${room.price} / night` : 'Rates on request'}
+                    {room.occupancy ? ` · Sleeps ${room.occupancy}` : ''}
                   </div>
                   {room.description && <p className="plain-card__text">{room.description.slice(0, 100)}</p>}
                 </Link>

@@ -1,11 +1,6 @@
 import { useRef, useState } from 'react';
 import { uploadFile } from '../api/client';
 
-/**
- * Controlled image field: shows current image (by URL string in `value`),
- * lets the admin pick/drop a new file, uploads it immediately via
- * uploadFile(), and calls onChange(url) once the upload resolves.
- */
 export default function ImageUploadField({ id, value, onChange, required }) {
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
@@ -33,7 +28,10 @@ export default function ImageUploadField({ id, value, onChange, required }) {
   return (
     <div>
       <div
-        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
         onDragLeave={() => setDragOver(false)}
         onDrop={(e) => {
           e.preventDefault();
@@ -51,28 +49,62 @@ export default function ImageUploadField({ id, value, onChange, required }) {
         }}
       >
         {value ? (
-          <div style={{ display: 'flex', gap: '0.9rem', alignItems: 'center', textAlign: 'left' }}>
+          <div
+            style={{
+              display: 'flex',
+              gap: '0.9rem',
+              alignItems: 'center',
+              textAlign: 'left',
+            }}
+          >
             <img
               src={value}
               alt="Uploaded preview"
-              style={{ width: 72, height: 72, objectFit: 'cover', flexShrink: 0, border: '1px solid var(--color-border)' }}
+              style={{
+                width: 72,
+                height: 72,
+                objectFit: 'cover',
+                flexShrink: 0,
+                border: '1px solid var(--color-border)',
+              }}
             />
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', wordBreak: 'break-all' }}>
+              <div
+                style={{
+                  fontSize: '0.85rem',
+                  color: 'var(--color-text-muted)',
+                  wordBreak: 'break-all',
+                }}
+              >
                 {value}
               </div>
               <button
                 type="button"
-                onClick={(e) => { e.stopPropagation(); onChange(''); }}
-                style={{ background: 'none', border: 'none', color: '#A33B2E', fontSize: '0.82rem', fontWeight: 600, padding: 0, marginTop: '0.4rem' }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onChange('');
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#A33B2E',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  padding: 0,
+                  marginTop: '0.4rem',
+                }}
               >
                 Remove
               </button>
             </div>
           </div>
         ) : (
-          <span style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
-            {uploading ? 'Uploading…' : 'Click to choose a photo, or drag one here'}
+          <span
+            style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}
+          >
+            {uploading
+              ? 'Uploading…'
+              : 'Click to choose a photo, or drag one here'}
           </span>
         )}
       </div>
@@ -84,11 +116,33 @@ export default function ImageUploadField({ id, value, onChange, required }) {
         accept="image/*"
         required={required && !value}
         onChange={(e) => handleFile(e.target.files?.[0])}
-        style={{ position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }}
+        style={{
+          position: 'absolute',
+          width: 1,
+          height: 1,
+          opacity: 0,
+          pointerEvents: 'none',
+        }}
       />
 
-      {uploading && <div style={{ fontSize: '0.82rem', color: 'var(--color-earth)', marginTop: '0.4rem' }}>Uploading photo…</div>}
-      {error && <div style={{ fontSize: '0.82rem', color: '#A33B2E', marginTop: '0.4rem' }}>{error}</div>}
+      {uploading && (
+        <div
+          style={{
+            fontSize: '0.82rem',
+            color: 'var(--color-earth)',
+            marginTop: '0.4rem',
+          }}
+        >
+          Uploading photo…
+        </div>
+      )}
+      {error && (
+        <div
+          style={{ fontSize: '0.82rem', color: '#A33B2E', marginTop: '0.4rem' }}
+        >
+          {error}
+        </div>
+      )}
     </div>
   );
 }

@@ -4,20 +4,37 @@ import { LoadingRow, ErrorNote } from '../../components/StateBlocks';
 
 export default function Dashboard() {
   const summaryQ = useApi(() => dashboard.summary(), []);
-  const recentQ = useApi(() => reservations.list({ limit: 5, sort: '-createdAt' }), []);
+  const recentQ = useApi(
+    () => reservations.list({ limit: 5, sort: '-createdAt' }),
+    []
+  );
   const summary = summaryQ.data?.data || summaryQ.data || {};
   const recent = asList(recentQ.data);
 
   const stats = [
-    { label: 'Reservations (30d)', value: summary.reservationsCount ?? summary.totalReservations ?? '—' },
-    { label: 'Occupancy', value: summary.occupancyRate ? `${summary.occupancyRate}%` : '—' },
-    { label: 'Revenue (30d)', value: summary.revenue ? `$${summary.revenue}` : '—' },
-    { label: 'New messages', value: summary.newContacts ?? summary.messagesCount ?? '—' },
+    {
+      label: 'Reservations (30d)',
+      value: summary.reservationsCount ?? summary.totalReservations ?? '—',
+    },
+    {
+      label: 'Occupancy',
+      value: summary.occupancyRate ? `${summary.occupancyRate}%` : '—',
+    },
+    {
+      label: 'Revenue (30d)',
+      value: summary.revenue ? `$${summary.revenue}` : '—',
+    },
+    {
+      label: 'New messages',
+      value: summary.newContacts ?? summary.messagesCount ?? '—',
+    },
   ];
 
   return (
     <>
-      <div className="admin-topbar"><h3>Dashboard</h3></div>
+      <div className="admin-topbar">
+        <h3>Dashboard</h3>
+      </div>
 
       {summaryQ.loading && <LoadingRow count={4} height={100} />}
       {summaryQ.error && <ErrorNote error={summaryQ.error} />}
@@ -38,18 +55,36 @@ export default function Dashboard() {
       {!recentQ.loading && !recentQ.error && (
         <table className="admin-table">
           <thead>
-            <tr><th>Guest</th><th>Room</th><th>Check in</th><th>Check out</th><th>Status</th></tr>
+            <tr>
+              <th>Guest</th>
+              <th>Room</th>
+              <th>Check in</th>
+              <th>Check out</th>
+              <th>Status</th>
+            </tr>
           </thead>
           <tbody>
             {recent.length === 0 && (
-              <tr><td colSpan={5} style={{ color: 'var(--color-text-muted)' }}>No reservations yet.</td></tr>
+              <tr>
+                <td colSpan={5} style={{ color: 'var(--color-text-muted)' }}>
+                  No reservations yet.
+                </td>
+              </tr>
             )}
             {recent.map((r, i) => (
               <tr key={r.id || r._id || i}>
-                <td>{r.name || r.guestName}</td>
-                <td>{r.roomName || r.roomId}</td>
-                <td>{r.checkIn ? new Date(r.checkIn).toLocaleDateString() : '—'}</td>
-                <td>{r.checkOut ? new Date(r.checkOut).toLocaleDateString() : '—'}</td>
+                <td>{r.customerName}</td>
+                <td>{r.room?.roomName || r.room}</td>
+                <td>
+                  {r.checkedIn
+                    ? new Date(r.checkedIn).toLocaleDateString()
+                    : '—'}
+                </td>
+                <td>
+                  {r.checkedOut
+                    ? new Date(r.checkedOut).toLocaleDateString()
+                    : '—'}
+                </td>
                 <td>{r.status || 'pending'}</td>
               </tr>
             ))}

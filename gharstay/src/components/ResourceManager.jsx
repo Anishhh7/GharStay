@@ -1,17 +1,10 @@
 import { useState } from 'react';
 import { useApi, asList } from '../api/useApi';
 import { LoadingRow, ErrorNote } from './StateBlocks';
+import MultiImageUploadField from './MultiImageUploadField';
 import ImageUploadField from './ImageUploadField';
 import { useAuth } from '../context/AuthContext';
 
-/**
- * fields: [{ key, label, type: 'text'|'number'|'textarea'|'date'|'image', required }]
- * resource: { list, create, update, remove } from api/resources.js
- * permissionResource: key in config/permissions.js used to gate the
- *   Add/Edit/Delete UI (e.g. 'gallery', 'blog', 'testimonial'). Some roles
- *   can view a list but not mutate it — those buttons hide rather than
- *   letting the request fail with a 403 from the API.
- */
 export default function ResourceManager({ title, resource, fields, columns, permissionResource }) {
   const { canDo } = useAuth();
   const canCreate = !permissionResource || canDo(permissionResource, 'create');
@@ -22,7 +15,7 @@ export default function ResourceManager({ title, resource, fields, columns, perm
   const listQ = useApi(() => resource.list(), [reloadTick]);
   const items = asList(listQ.data);
 
-  const [modal, setModal] = useState(null); // null | { mode: 'create'|'edit', item }
+  const [modal, setModal] = useState(null);
   const [form, setForm] = useState({});
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
@@ -32,7 +25,11 @@ export default function ResourceManager({ title, resource, fields, columns, perm
 
   function openCreate() {
     const blank = {};
-    fields.forEach((f) => { blank[f.key] = ''; });
+    fields.forEach((f) => {
+      if (f.type === 'checkbox') blank[f.key] = false;
+      else if (f.type === 'images') blank[f.key] = [];
+      else blank[f.key] = '';
+    });
     setForm(blank);
     setSaveError('');
     setModal({ mode: 'create' });
@@ -40,7 +37,12 @@ export default function ResourceManager({ title, resource, fields, columns, perm
 
   function openEdit(item) {
     const values = {};
-    fields.forEach((f) => { values[f.key] = item[f.key] ?? ''; });
+    fields.forEach((f) => {
+      if (f.type === 'tags') values[f.key] = Array.isArray(item[f.key]) ? item[f.key].join(', ') : (item[f.key] ?? '');
+      else if (f.type === 'images') values[f.key] = Array.isArray(item[f.key]) ? item[f.key] : [];
+      else if (f.type === 'checkbox') values[f.key] = !!item[f.key];
+      else values[f.key] = item[f.key] ?? '';
+    });
     setForm(values);
     setSaveError('');
     setModal({ mode: 'edit', item });
@@ -50,12 +52,18 @@ export default function ResourceManager({ title, resource, fields, columns, perm
     e.preventDefault();
     setSaving(true);
     setSaveError('');
+    const payload = { ...form };
+    fields.forEach((f) => {
+      if (f.type === 'tags') {
+        payload[f.key] = String(form[f.key] || '').split(',').map((s) => s.trim()).filter(Boolean);
+      }
+    });
     try {
       if (modal.mode === 'create') {
-        await resource.create(form);
+        await resource.create(payload);
       } else {
         const id = modal.item.id || modal.item._id;
-        await resource.update(id, form);
+        await resource.update(id, payload);
       }
       setModal(null);
       setReloadTick((t) => t + 1);
@@ -130,8 +138,22 @@ export default function ResourceManager({ title, resource, fields, columns, perm
             {saveError && <div className="notice notice--error">{saveError}</div>}
             <form onSubmit={save}>
               {fields.map((f) => (
-                <div className="form-field" key={f.key} style={f.type === 'image' ? { position: 'relative' } : undefined}>
-                  <label htmlFor={`f-${f.key}`}>{f.label}</label>
+                <div className="form-field" key={f.key} style={(f.type === 'image' || f.type === 'images') ? { position: 'relative' } : undefined}>
+                  {f.type === 'checkbox' ? (
+                    <label htmlFor={`f-${f.key}`} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexDirection: 'row', textTransform: 'none', letterSpacing: 0, fontSize: '0.92rem', color: 'var(--color-text)' }}>
+                      <input
+                        id={`f-${f.key}`}
+                        type="checkbox"
+                        checked={!!form[f.key]}
+                        onChange={(e) => setForm((s) => ({ ...s, [f.key]: e.target.checked }))}
+                        style={{ width: 'auto' }}
+                      />
+                      {f.label}
+                    </label>
+                  ) : (
+                    <label htmlFor={`f-${f.key}`}>{f.label}</label>
+                  )}
+
                   {f.type === 'textarea' ? (
                     <textarea
                       id={`f-${f.key}`}
@@ -147,7 +169,30 @@ export default function ResourceManager({ title, resource, fields, columns, perm
                       value={form[f.key] ?? ''}
                       onChange={(url) => setForm((s) => ({ ...s, [f.key]: url }))}
                     />
-                  ) : (
+                  ) : f.type === 'images' ? (
+                    <MultiImageUploadField
+                      id={`f-${f.key}`}
+                      value={form[f.key] ?? []}
+                      onChange={(urls) => setForm((s) => ({ ...s, [f.key]: urls }))}
+                    />
+                  ) : f.type === 'select' ? (
+                    <select
+                      id={`f-${f.key}`}
+                      required={f.required}
+                      value={form[f.key] ?? ''}
+                      onChange={(e) => setForm((s) => ({ ...s, [f.key]: e.target.value }))}
+                    >
+                      <option value="" disabled>Choose…</option>
+                      {(f.options || []).map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                    </select>
+                  ) : f.type === 'tags' ? (
+                    <input
+                      id={`f-${f.key}`}
+                      placeholder="comma, separated, values"
+                      value={form[f.key] ?? ''}
+                      onChange={(e) => setForm((s) => ({ ...s, [f.key]: e.target.value }))}
+                    />
+                  ) : f.type === 'checkbox' ? null : (
                     <input
                       id={`f-${f.key}`}
                       type={f.type || 'text'}
